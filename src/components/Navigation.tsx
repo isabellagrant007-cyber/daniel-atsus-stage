@@ -30,7 +30,7 @@ const Navigation = () => {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5">
           <a href="#" className="font-serif text-lg tracking-wide">
-            D.A.H
+            ADJ
           </a>
 
           {/* Desktop */}

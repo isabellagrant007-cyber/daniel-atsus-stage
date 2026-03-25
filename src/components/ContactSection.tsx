@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Instagram, Mail } from "lucide-react";
 
 const ContactSection = () => {
   return (
@@ -22,8 +23,9 @@ const ContactSection = () => {
           <div className="space-y-4 pt-4">
             <a
               href="mailto:danielhukportiadjorble@gmail.com"
-              className="block text-foreground text-sm font-sans tracking-wider hover:text-gold transition-colors duration-300"
+              className="flex items-center justify-center gap-2 text-foreground text-sm font-sans tracking-wider hover:text-gold transition-colors duration-300"
             >
+              <Mail className="w-4 h-4" />
               danielhukportiadjorble@gmail.com
             </a>
 
@@ -31,8 +33,9 @@ const ContactSection = () => {
               href="https://instagram.com/adjdanniel"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block text-muted-foreground text-xs tracking-[0.25em] uppercase font-sans hover:text-gold transition-colors duration-300"
+              className="inline-flex items-center gap-2 text-muted-foreground text-xs tracking-[0.25em] uppercase font-sans hover:text-gold transition-colors duration-300"
             >
+              <Instagram className="w-4 h-4" />
               @adjdanniel
             </a>
           </div>
