@@ -131,7 +131,7 @@ const GallerySection = () => {
     <>
       <section id="gallery" ref={sectionRef} className="py-16 md:py-32 px-4 md:px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <motion.div style={{ y: headerY, opacity: headerOpacity }} className="text-center mb-8 md:mb-12">
+          <motion.div style={{ y: headerY, opacity: headerOpacity }} className="text-center mb-12 md:mb-20">
             <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans mb-3 md:mb-4">Visual</p>
             <h2 className="font-serif text-3xl md:text-6xl font-light">Gallery</h2>
           </motion.div>
