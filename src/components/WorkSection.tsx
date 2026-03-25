@@ -46,7 +46,7 @@ const fashionSections = [
   {
     title: "FL × COPA Jersey Launch",
     subtitle: "Campaign shoot for copafootball",
-    year: "2024",
+    year: "2026",
     images: [
       { src: copa1, alt: "FL × COPA — Solo portrait in stadium" },
       { src: copa2, alt: "FL × COPA — Duo campaign shot" },
