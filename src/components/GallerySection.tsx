@@ -80,6 +80,7 @@ const categories = [
   { key: "all", label: "All" },
   { key: "cinematic", label: "Cinematic" },
   { key: "fashion", label: "Fashion" },
+  { key: "personal", label: "Personal" },
   { key: "bts", label: "Behind the Scenes" },
 ] as const;
 
