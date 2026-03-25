@@ -28,6 +28,7 @@ const filmCredits = [
     detail: "World Premiere — Berlin International Film Festival",
     accolade: "Official Selection — Berlinale 2026",
     image: cinematicImage,
+    trailer: "/videos/paradise-trailer.mp4",
   },
   {
     title: "Tantra",
