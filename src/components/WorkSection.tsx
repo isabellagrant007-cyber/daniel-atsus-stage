@@ -15,6 +15,7 @@ import personal2 from "@/assets/personal-2.jpg";
 import personal3 from "@/assets/personal-3.jpg";
 import personal4 from "@/assets/personal-4.jpg";
 import personal5 from "@/assets/personal-5.jpg";
+import personal6 from "@/assets/personal-6.jpg";
 import copa1 from "@/assets/copa-1.jpg";
 import copa2 from "@/assets/copa-2.jpg";
 import copa3 from "@/assets/copa-3.jpg";
@@ -39,6 +40,7 @@ const filmCredits = [
     detail: "Directed by Helel Venture Smith",
     accolade: "Official Selection — Blackstar International Film Festival 2025",
     image: tantraPoster,
+    trailer: "/videos/tantra-trailer.mp4",
   },
 ];
 
@@ -81,8 +83,9 @@ const personalImages = [
   { src: personal1, alt: "Personal shoot — Collar pop" },
   { src: personal2, alt: "Personal shoot — Crosswalk front" },
   { src: personal3, alt: "Personal shoot — Crosswalk back" },
-  { src: personal4, alt: "Personal shoot — Crosswalk standing" },
-  { src: personal5, alt: "Personal shoot — Crosswalk walking" },
+  { src: personal4, alt: "Personal shoot — Garage editorial" },
+  { src: personal5, alt: "Personal shoot — Interior portrait" },
+  { src: personal6, alt: "Personal shoot — Studio triptych" },
 ];
 
 const WorkSection = () => {

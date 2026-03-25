@@ -31,6 +31,9 @@ import fa4 from "@/assets/fashion-afw-4.jpg";
 import p1 from "@/assets/personal-1.jpg";
 import p2 from "@/assets/personal-2.jpg";
 import p3 from "@/assets/personal-3.jpg";
+import p4 from "@/assets/personal-4.jpg";
+import p5 from "@/assets/personal-5.jpg";
+import p6 from "@/assets/personal-6.jpg";
 import copa1 from "@/assets/copa-1.jpg";
 import copa2 from "@/assets/copa-2.jpg";
 
@@ -69,11 +72,14 @@ const allImages: GalleryImage[] = [
   { src: p1, alt: "Personal — Street editorial", category: "personal", aspect: "aspect-[3/4]" },
   { src: bts3, alt: "Night shoot crew", category: "bts", aspect: "aspect-[4/3]" },
   { src: copa1, alt: "FL × COPA — Solo portrait", category: "fashion", aspect: "aspect-[3/4]" },
+  { src: p4, alt: "Personal — Garage editorial", category: "personal", aspect: "aspect-[3/4]" },
   { src: bts7, alt: "Harbor filming", category: "bts", aspect: "aspect-[4/3]" },
   { src: p2, alt: "Personal — Crosswalk front", category: "personal", aspect: "aspect-[3/4]" },
   { src: copa2, alt: "FL × COPA — Duo campaign", category: "fashion", aspect: "aspect-[3/4]" },
+  { src: p5, alt: "Personal — Interior portrait", category: "personal", aspect: "aspect-[3/4]" },
   { src: img2, alt: "Full body portrait", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: p3, alt: "Personal — Crosswalk back", category: "personal", aspect: "aspect-[3/4]" },
+  { src: p6, alt: "Personal — Studio triptych", category: "personal", span: "col-span-2", aspect: "aspect-[16/9]" },
 ];
 
 const categories = [
