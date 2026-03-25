@@ -40,6 +40,7 @@ const filmCredits = [
     detail: "Directed by Helel Venture Smith",
     accolade: "Official Selection — Blackstar International Film Festival 2025",
     image: tantraPoster,
+    trailer: "/videos/tantra-trailer.mp4",
   },
 ];
 
