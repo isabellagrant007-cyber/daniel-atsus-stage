@@ -6,6 +6,8 @@ import tantraPoster from "@/assets/tantra-poster.jpg";
 import fashionUntamed1 from "@/assets/fashion-untamed-1.jpg";
 import fashionUntamed2 from "@/assets/fashion-untamed-2.jpg";
 import fashionUntamed3 from "@/assets/fashion-untamed-3.jpg";
+import fashionUntamed4 from "@/assets/fashion-untamed-4.jpg";
+import fashionUntamed5 from "@/assets/fashion-untamed-5.jpg";
 import fashionAfw1 from "@/assets/fashion-afw-1.jpg";
 import fashionAfw2 from "@/assets/fashion-afw-2.jpg";
 import fashionAfw3 from "@/assets/fashion-afw-3.jpg";
