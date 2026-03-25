@@ -69,6 +69,8 @@ const allImages: GalleryImage[] = [
   { src: fa5, alt: "AFWK 2023 — Sheer neon runway", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts4, alt: "On the water", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: fw3, alt: "Untamed Empire — Behind the scenes", category: "fashion", span: "col-span-2", aspect: "aspect-[16/9]" },
+  { src: fw4, alt: "Untamed Empire — Soft focus", category: "fashion", aspect: "aspect-square" },
+  { src: fw5, alt: "Untamed Empire — Twilight editorial", category: "fashion", aspect: "aspect-[3/4]" },
   { src: img7, alt: "Nature portrait", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts10, alt: "Between takes", category: "bts", aspect: "aspect-[4/3]" },
   { src: bts11, alt: "Silhouette at sea — Paradise", category: "bts", aspect: "aspect-square" },
