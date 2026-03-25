@@ -20,6 +20,7 @@ import bts7 from "@/assets/bts-7.jpg";
 import bts8 from "@/assets/bts-8.jpg";
 import bts9 from "@/assets/bts-9.jpg";
 import bts10 from "@/assets/bts-10.jpg";
+import bts11 from "@/assets/bts-11.jpg";
 
 import fw1 from "@/assets/fashion-untamed-1.jpg";
 import fw2 from "@/assets/fashion-untamed-2.jpg";
