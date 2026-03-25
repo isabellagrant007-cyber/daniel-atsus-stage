@@ -83,8 +83,9 @@ const personalImages = [
   { src: personal1, alt: "Personal shoot — Collar pop" },
   { src: personal2, alt: "Personal shoot — Crosswalk front" },
   { src: personal3, alt: "Personal shoot — Crosswalk back" },
-  { src: personal4, alt: "Personal shoot — Crosswalk standing" },
-  { src: personal5, alt: "Personal shoot — Crosswalk walking" },
+  { src: personal4, alt: "Personal shoot — Garage editorial" },
+  { src: personal5, alt: "Personal shoot — Interior portrait" },
+  { src: personal6, alt: "Personal shoot — Studio triptych" },
 ];
 
 const WorkSection = () => {
