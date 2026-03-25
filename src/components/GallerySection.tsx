@@ -66,9 +66,14 @@ const allImages: GalleryImage[] = [
   { src: img3, alt: "Bar scene", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts2, alt: "Cast group photo", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: img5, alt: "Rustic setting", category: "cinematic", aspect: "aspect-[3/4]" },
+  { src: p1, alt: "Personal — Street editorial", category: "personal", aspect: "aspect-[3/4]" },
   { src: bts3, alt: "Night shoot crew", category: "bts", aspect: "aspect-[4/3]" },
+  { src: copa1, alt: "FL × COPA — Solo portrait", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts7, alt: "Harbor filming", category: "bts", aspect: "aspect-[4/3]" },
+  { src: p2, alt: "Personal — Crosswalk front", category: "personal", aspect: "aspect-[3/4]" },
+  { src: copa2, alt: "FL × COPA — Duo campaign", category: "fashion", aspect: "aspect-[3/4]" },
   { src: img2, alt: "Full body portrait", category: "cinematic", aspect: "aspect-[3/4]" },
+  { src: p3, alt: "Personal — Crosswalk back", category: "personal", aspect: "aspect-[3/4]" },
 ];
 
 const categories = [
