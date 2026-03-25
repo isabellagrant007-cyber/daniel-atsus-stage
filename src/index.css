@@ -65,6 +65,27 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
   }
+
+  /* Custom scrollbar — ultra-thin, gold accent */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--gold) / 0.2);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--gold) / 0.4);
+  }
+
+  /* Selection */
+  ::selection {
+    background: hsl(var(--gold) / 0.2);
+    color: hsl(var(--foreground));
+  }
 }
 
 @layer utilities {
@@ -101,5 +122,14 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Hide scrollbar utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
