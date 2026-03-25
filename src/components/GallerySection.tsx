@@ -31,6 +31,9 @@ import fa4 from "@/assets/fashion-afw-4.jpg";
 import p1 from "@/assets/personal-1.jpg";
 import p2 from "@/assets/personal-2.jpg";
 import p3 from "@/assets/personal-3.jpg";
+import p4 from "@/assets/personal-4.jpg";
+import p5 from "@/assets/personal-5.jpg";
+import p6 from "@/assets/personal-6.jpg";
 import copa1 from "@/assets/copa-1.jpg";
 import copa2 from "@/assets/copa-2.jpg";
 
