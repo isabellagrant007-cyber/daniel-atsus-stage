@@ -80,6 +80,8 @@ const fashionSections = [
       { src: fashionUntamed1, alt: "Untamed Empire — Editorial 1" },
       { src: fashionUntamed2, alt: "Untamed Empire — Editorial 2" },
       { src: fashionUntamed3, alt: "Untamed Empire — BTS" },
+      { src: fashionUntamed4, alt: "Untamed Empire — Soft focus portrait" },
+      { src: fashionUntamed5, alt: "Untamed Empire — Twilight editorial" },
     ],
   },
 ];
