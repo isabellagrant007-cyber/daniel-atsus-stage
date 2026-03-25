@@ -28,8 +28,8 @@ const Navigation = () => {
           scrolled ? "bg-background/90 backdrop-blur-md border-b border-border/30" : ""
         }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-5">
-          <a href="#" className="font-serif text-lg tracking-wide">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 md:px-6 py-4 md:py-5">
+          <a href="#" className="font-serif text-base md:text-lg tracking-wide">
             ADJ
           </a>
 
