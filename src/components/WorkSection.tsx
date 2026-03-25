@@ -88,6 +88,28 @@ const personalImages = [
 const WorkSection = () => {
   const [hoveredFilm, setHoveredFilm] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [playingTrailer, setPlayingTrailer] = useState<number | null>(null);
+  const [muted, setMuted] = useState(true);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  const toggleTrailer = (idx: number) => {
+    const video = videoRefs.current[idx];
+    if (!video) return;
+    if (playingTrailer === idx) {
+      video.pause();
+      setPlayingTrailer(null);
+    } else {
+      videoRefs.current.forEach((v, i) => { if (v && i !== idx) v.pause(); });
+      video.play();
+      setPlayingTrailer(idx);
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMuted(!muted);
+    videoRefs.current.forEach((v) => { if (v) v.muted = !muted; });
+  };
 
   return (
     <section id="work" className="py-32 px-6">
@@ -117,7 +139,7 @@ const WorkSection = () => {
             <div className="flex-1 h-px bg-gold/20" />
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-16">
             {filmCredits.map((film, i) => (
               <motion.div
                 key={film.title}
@@ -125,56 +147,138 @@ const WorkSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: i * 0.15 }}
-                className="group relative grid md:grid-cols-[1fr_1.2fr] gap-8 items-center"
+                className="group relative"
                 onMouseEnter={() => setHoveredFilm(i)}
                 onMouseLeave={() => setHoveredFilm(null)}
               >
-                {/* Image */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-surface-elevated">
+                {/* Cinematic media container */}
+                <div className="relative aspect-[21/9] overflow-hidden bg-background rounded-sm mb-8">
+                  {/* Poster image */}
                   <motion.img
                     src={film.image}
                     alt={`${film.title} — Film Still`}
-                    className="h-full w-full object-cover"
-                    animate={{
-                      scale: hoveredFilm === i ? 1.08 : 1,
-                    }}
-                    transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+                    className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+                      playingTrailer === i ? "opacity-0" : "opacity-100"
+                    }`}
+                    animate={{ scale: hoveredFilm === i ? 1.05 : 1 }}
+                    transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
                   />
-                  {/* Cinematic bars */}
-                  <div className="absolute top-0 left-0 right-0 h-[8%] bg-background/80" />
-                  <div className="absolute bottom-0 left-0 right-0 h-[8%] bg-background/80" />
+
+                  {/* Video trailer */}
+                  {film.trailer && (
+                    <video
+                      ref={(el) => { videoRefs.current[i] = el; }}
+                      src={film.trailer}
+                      muted={muted}
+                      loop
+                      playsInline
+                      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+                        playingTrailer === i ? "opacity-100" : "opacity-0"
+                      }`}
+                      onEnded={() => setPlayingTrailer(null)}
+                    />
+                  )}
+
+                  {/* Cinematic letterbox bars */}
+                  <div className="absolute top-0 left-0 right-0 h-[10%] bg-gradient-to-b from-background to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[10%] bg-gradient-to-t from-background to-transparent" />
+
+                  {/* Film grain overlay */}
+                  <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-40 pointer-events-none mix-blend-overlay" />
+
                   {/* Type badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="text-[9px] tracking-[0.3em] uppercase font-sans text-gold bg-background/60 backdrop-blur-sm px-3 py-1.5 border border-gold/20">
+                  <div className="absolute top-6 left-6 z-10">
+                    <span className="text-[9px] tracking-[0.3em] uppercase font-sans text-gold bg-background/60 backdrop-blur-md px-4 py-2 border border-gold/20">
                       {film.type}
                     </span>
                   </div>
+
+                  {/* Play/Pause button */}
+                  {film.trailer && (
+                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                      <motion.button
+                        onClick={() => toggleTrailer(i)}
+                        className="relative group/play"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {/* Pulsing ring */}
+                        <motion.div
+                          className="absolute inset-0 rounded-full border border-gold/30"
+                          animate={playingTrailer !== i ? { scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] } : {}}
+                          transition={{ duration: 2, repeat: Infinity }}
+                          style={{ width: 80, height: 80, margin: "auto", inset: 0, position: "absolute" }}
+                        />
+                        <div className="w-20 h-20 rounded-full bg-background/40 backdrop-blur-lg border border-gold/30 flex items-center justify-center group-hover/play:bg-gold/20 transition-colors duration-500">
+                          {playingTrailer === i ? (
+                            <Pause className="w-6 h-6 text-gold fill-gold" />
+                          ) : (
+                            <Play className="w-6 h-6 text-gold fill-gold ml-1" />
+                          )}
+                        </div>
+                      </motion.button>
+
+                      {/* Mute toggle — only visible when playing */}
+                      <AnimatePresence>
+                        {playingTrailer === i && (
+                          <motion.button
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: 20 }}
+                            onClick={toggleMute}
+                            className="absolute bottom-6 right-6 w-10 h-10 rounded-full bg-background/40 backdrop-blur-lg border border-gold/20 flex items-center justify-center hover:bg-gold/20 transition-colors"
+                          >
+                            {muted ? (
+                              <VolumeX className="w-4 h-4 text-gold" />
+                            ) : (
+                              <Volume2 className="w-4 h-4 text-gold" />
+                            )}
+                          </motion.button>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  )}
+
+                  {/* "Watch Trailer" text */}
+                  {film.trailer && playingTrailer !== i && (
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: hoveredFilm === i ? 1 : 0 }}
+                      className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.4em] uppercase font-sans text-gold/60 z-10"
+                    >
+                      Watch Trailer
+                    </motion.p>
+                  )}
                 </div>
 
-                {/* Info */}
-                <div className="space-y-4 md:pl-4">
-                  <div className="flex items-baseline gap-4">
-                    <h3 className="font-serif text-3xl md:text-5xl italic font-light group-hover:text-gold transition-colors duration-700">
-                      {film.title}
-                    </h3>
-                    <span className="text-gold/40 text-xs tracking-[0.2em] uppercase font-sans">
-                      {film.year}
-                    </span>
+                {/* Info row */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                  <div className="space-y-3">
+                    <div className="flex items-baseline gap-4">
+                      <h3 className="font-serif text-3xl md:text-5xl italic font-light group-hover:text-gold transition-colors duration-700">
+                        {film.title}
+                      </h3>
+                      <span className="text-gold/40 text-xs tracking-[0.2em] uppercase font-sans">
+                        {film.year}
+                      </span>
+                    </div>
+                    <div className="w-12 h-px bg-gold/30 group-hover:w-24 transition-all duration-700" />
+                    <p className="text-foreground text-sm font-sans tracking-wide">{film.role}</p>
+                    <p className="text-muted-foreground text-sm font-sans font-light">{film.detail}</p>
                   </div>
-                  <div className="w-12 h-px bg-gold/30 group-hover:w-20 transition-all duration-700" />
-                  <p className="text-foreground text-sm font-sans tracking-wide">{film.role}</p>
-                  <p className="text-muted-foreground text-sm font-sans font-light">{film.detail}</p>
                   {film.accolade && (
-                    <motion.p
+                    <motion.div
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.4 }}
-                      className="text-gold/60 text-xs tracking-[0.15em] uppercase font-sans mt-4 flex items-center gap-2"
+                      className="flex items-center gap-3"
                     >
-                      <span className="w-4 h-px bg-gold/40" />
-                      {film.accolade}
-                    </motion.p>
+                      <div className="w-8 h-px bg-gold/40" />
+                      <p className="text-gold/60 text-xs tracking-[0.15em] uppercase font-sans whitespace-nowrap">
+                        {film.accolade}
+                      </p>
+                    </motion.div>
                   )}
                 </div>
               </motion.div>
@@ -207,7 +311,6 @@ const WorkSection = () => {
               transition={{ duration: 0.7, delay: sIdx * 0.1 }}
               className="mb-16 last:mb-0"
             >
-              {/* Section header */}
               <div className="flex items-baseline justify-between mb-6">
                 <div>
                   <h3 className="font-serif text-xl md:text-2xl italic font-light">{section.title}</h3>
@@ -216,11 +319,10 @@ const WorkSection = () => {
                 <span className="text-gold/40 text-xs tracking-[0.2em] uppercase font-sans">{section.year}</span>
               </div>
 
-              {/* Image strip */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                {section.images.map((img, i) => (
+                {section.images.map((img, imgIdx) => (
                   <motion.div
-                    key={i}
+                    key={imgIdx}
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.4 }}
                     className="group relative aspect-[3/4] overflow-hidden cursor-pointer"
@@ -257,7 +359,6 @@ const WorkSection = () => {
             Street-style and personal editorial shoots.
           </p>
 
-          {/* Horizontal scroll strip */}
           <div className="relative overflow-hidden">
             <motion.div
               className="flex gap-3"
