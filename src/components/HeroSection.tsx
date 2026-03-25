@@ -15,12 +15,12 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-end pb-24 px-6 text-center">
+      <div className="relative z-10 flex h-full flex-col items-center justify-end pb-16 md:pb-24 px-4 md:px-6 text-center">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="text-gold mb-4 text-sm tracking-[0.35em] uppercase font-sans font-light"
+          className="text-gold mb-3 md:mb-4 text-[10px] md:text-sm tracking-[0.25em] md:tracking-[0.35em] uppercase font-sans font-light"
         >
           Official Selection — Berlinale 2026
         </motion.p>
@@ -29,7 +29,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.5 }}
-          className="font-serif text-4xl md:text-6xl lg:text-7xl font-light tracking-wide mb-4"
+          className="font-serif text-3xl md:text-6xl lg:text-7xl font-light tracking-wide mb-3 md:mb-4"
         >
           Daniel Atsu
           <br />
@@ -40,7 +40,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="text-muted-foreground text-sm tracking-[0.3em] uppercase mb-10 font-sans font-light"
+          className="text-muted-foreground text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase mb-8 md:mb-10 font-sans font-light"
         >
           Actor &nbsp;|&nbsp; Creative &nbsp;|&nbsp; Performer
         </motion.p>
@@ -50,7 +50,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.4 }}
-          className="border border-gold/40 text-gold px-8 py-3 text-xs tracking-[0.25em] uppercase font-sans hover:bg-gold/10 transition-colors duration-500"
+          className="border border-gold/40 text-gold px-6 md:px-8 py-2.5 md:py-3 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase font-sans hover:bg-gold/10 transition-colors duration-500"
         >
           View Work
         </motion.a>
@@ -61,12 +61,12 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-10"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          className="w-px h-8 bg-gradient-to-b from-gold/60 to-transparent"
+          className="w-px h-6 md:h-8 bg-gradient-to-b from-gold/60 to-transparent"
         />
       </motion.div>
     </section>

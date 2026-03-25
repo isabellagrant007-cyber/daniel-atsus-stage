@@ -3,8 +3,8 @@ import aboutImage from "@/assets/daniel-about.jpg";
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-32 px-6">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <section id="about" className="py-16 md:py-32 px-4 md:px-6">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-16 items-center">
         {/* Image */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
@@ -20,7 +20,7 @@ const AboutSection = () => {
               className="h-full w-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
             />
           </div>
-          <div className="absolute -bottom-4 -right-4 w-full h-full border border-gold/20 -z-10" />
+          <div className="absolute -bottom-3 -right-3 md:-bottom-4 md:-right-4 w-full h-full border border-gold/20 -z-10" />
         </motion.div>
 
         {/* Text */}
@@ -29,14 +29,14 @@ const AboutSection = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="space-y-6"
+          className="space-y-4 md:space-y-6"
         >
           <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans">About</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-light italic">
+          <h2 className="font-serif text-2xl md:text-4xl font-light italic">
             An Emerging Presence
           </h2>
 
-          <div className="space-y-5 text-muted-foreground text-sm leading-relaxed font-sans font-light">
+          <div className="space-y-4 md:space-y-5 text-muted-foreground text-xs md:text-sm leading-relaxed font-sans font-light">
             <p>
               Daniel Atsu Hukporti-Adjorble is an emerging screen talent whose work spans film and music visuals.
             </p>

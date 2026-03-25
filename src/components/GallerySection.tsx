@@ -81,7 +81,7 @@ const categories = [
   { key: "cinematic", label: "Cinematic" },
   { key: "fashion", label: "Fashion" },
   { key: "personal", label: "Personal" },
-  { key: "bts", label: "Behind the Scenes" },
+  { key: "bts", label: "BTS" },
 ] as const;
 
 const GallerySection = () => {
@@ -123,26 +123,26 @@ const GallerySection = () => {
 
   return (
     <>
-      <section id="gallery" ref={sectionRef} className="py-32 px-6 overflow-hidden">
+      <section id="gallery" ref={sectionRef} className="py-16 md:py-32 px-4 md:px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <motion.div style={{ y: headerY, opacity: headerOpacity }} className="text-center mb-12">
-            <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans mb-4">Visual</p>
-            <h2 className="font-serif text-4xl md:text-6xl font-light">Gallery</h2>
+          <motion.div style={{ y: headerY, opacity: headerOpacity }} className="text-center mb-8 md:mb-12">
+            <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans mb-3 md:mb-4">Visual</p>
+            <h2 className="font-serif text-3xl md:text-6xl font-light">Gallery</h2>
           </motion.div>
 
-          {/* Filter tabs */}
+          {/* Filter tabs — horizontally scrollable on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center gap-1 mb-16"
+            className="flex justify-start md:justify-center gap-1 mb-8 md:mb-16 overflow-x-auto pb-2 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide"
           >
             {categories.map((cat) => (
               <button
                 key={cat.key}
                 onClick={() => setActiveFilter(cat.key)}
-                className={`px-5 py-2 text-xs tracking-[0.2em] uppercase font-sans transition-all duration-500 border ${
+                className={`px-3 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.2em] uppercase font-sans transition-all duration-500 border whitespace-nowrap flex-shrink-0 ${
                   activeFilter === cat.key
                     ? "border-gold text-gold bg-gold/5"
                     : "border-border/30 text-muted-foreground hover:text-foreground hover:border-border/60"
@@ -154,7 +154,7 @@ const GallerySection = () => {
           </motion.div>
 
           {/* Grid */}
-          <motion.div layout className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+          <motion.div layout className="grid grid-cols-2 md:grid-cols-3 gap-1.5 md:gap-3">
             <AnimatePresence mode="popLayout">
               {filtered.map((img, i) => (
                 <motion.div
@@ -178,13 +178,13 @@ const GallerySection = () => {
                     className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1.2s] ease-out"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out">
-                    <p className="text-xs tracking-[0.15em] uppercase font-sans text-foreground/80">{img.alt}</p>
+                  <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out">
+                    <p className="text-[9px] md:text-xs tracking-[0.15em] uppercase font-sans text-foreground/80">{img.alt}</p>
                     {img.category === "bts" && (
-                      <p className="text-[10px] tracking-[0.2em] uppercase text-gold mt-1">Paradise — BTS</p>
+                      <p className="text-[8px] md:text-[10px] tracking-[0.2em] uppercase text-gold mt-1">Paradise — BTS</p>
                     )}
                     {img.category === "fashion" && (
-                      <p className="text-[10px] tracking-[0.2em] uppercase text-gold mt-1">Fashion</p>
+                      <p className="text-[8px] md:text-[10px] tracking-[0.2em] uppercase text-gold mt-1">Fashion</p>
                     )}
                   </div>
                 </motion.div>
@@ -202,17 +202,17 @@ const GallerySection = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-md p-4"
             onClick={closeLightbox}
           >
-            <button onClick={closeLightbox} className="absolute top-6 right-6 z-50 text-foreground/60 hover:text-foreground transition-colors">
-              <X className="w-6 h-6" />
+            <button onClick={closeLightbox} className="absolute top-4 right-4 md:top-6 md:right-6 z-50 text-foreground/60 hover:text-foreground transition-colors">
+              <X className="w-5 h-5 md:w-6 md:h-6" />
             </button>
-            <button onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }} className="absolute left-4 md:left-8 z-50 p-2 text-foreground/40 hover:text-foreground transition-colors">
-              <ChevronLeft className="w-8 h-8" />
+            <button onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }} className="absolute left-2 md:left-8 z-50 p-1 md:p-2 text-foreground/40 hover:text-foreground transition-colors">
+              <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
             </button>
-            <button onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }} className="absolute right-4 md:right-8 z-50 p-2 text-foreground/40 hover:text-foreground transition-colors">
-              <ChevronRight className="w-8 h-8" />
+            <button onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }} className="absolute right-2 md:right-8 z-50 p-1 md:p-2 text-foreground/40 hover:text-foreground transition-colors">
+              <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
             </button>
 
             <AnimatePresence mode="wait">
@@ -224,14 +224,14 @@ const GallerySection = () => {
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.92, x: -40 }}
                 transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                className="max-h-[85vh] max-w-[90vw] object-contain"
+                className="max-h-[75vh] md:max-h-[85vh] max-w-[85vw] md:max-w-[90vw] object-contain"
                 onClick={(e) => e.stopPropagation()}
               />
             </AnimatePresence>
 
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="absolute bottom-8 text-center">
-              <p className="text-xs tracking-[0.2em] uppercase font-sans text-foreground/50">{filtered[lightboxIndex].alt}</p>
-              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 mt-1">{lightboxIndex + 1} / {filtered.length}</p>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="absolute bottom-6 md:bottom-8 text-center">
+              <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase font-sans text-foreground/50">{filtered[lightboxIndex].alt}</p>
+              <p className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-foreground/30 mt-1">{lightboxIndex + 1} / {filtered.length}</p>
             </motion.div>
           </motion.div>
         )}
