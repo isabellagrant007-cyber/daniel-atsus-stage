@@ -20,14 +20,18 @@ import bts7 from "@/assets/bts-7.jpg";
 import bts8 from "@/assets/bts-8.jpg";
 import bts9 from "@/assets/bts-9.jpg";
 import bts10 from "@/assets/bts-10.jpg";
+import bts11 from "@/assets/bts-11.jpg";
 
 import fw1 from "@/assets/fashion-untamed-1.jpg";
 import fw2 from "@/assets/fashion-untamed-2.jpg";
 import fw3 from "@/assets/fashion-untamed-3.jpg";
+import fw4 from "@/assets/fashion-untamed-4.jpg";
+import fw5 from "@/assets/fashion-untamed-5.jpg";
 import fa1 from "@/assets/fashion-afw-1.jpg";
 import fa2 from "@/assets/fashion-afw-2.jpg";
 import fa3 from "@/assets/fashion-afw-3.jpg";
 import fa4 from "@/assets/fashion-afw-4.jpg";
+import fa5 from "@/assets/fashion-afw-5.jpg";
 import p1 from "@/assets/personal-1.jpg";
 import p2 from "@/assets/personal-2.jpg";
 import p3 from "@/assets/personal-3.jpg";
@@ -62,10 +66,14 @@ const allImages: GalleryImage[] = [
   { src: img4, alt: "Outdoor portrait", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts8, alt: "In the makeup trailer", category: "bts", aspect: "aspect-[4/3]" },
   { src: fa4, alt: "AFWK 2023 — Navy brocade", category: "fashion", aspect: "aspect-[3/4]" },
+  { src: fa5, alt: "AFWK 2023 — Sheer neon runway", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts4, alt: "On the water", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: fw3, alt: "Untamed Empire — Behind the scenes", category: "fashion", span: "col-span-2", aspect: "aspect-[16/9]" },
+  { src: fw4, alt: "Untamed Empire — Soft focus", category: "fashion", aspect: "aspect-square" },
+  { src: fw5, alt: "Untamed Empire — Twilight editorial", category: "fashion", aspect: "aspect-[3/4]" },
   { src: img7, alt: "Nature portrait", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts10, alt: "Between takes", category: "bts", aspect: "aspect-[4/3]" },
+  { src: bts11, alt: "Silhouette at sea — Paradise", category: "bts", aspect: "aspect-square" },
   { src: img3, alt: "Bar scene", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts2, alt: "Cast group photo", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: img5, alt: "Rustic setting", category: "cinematic", aspect: "aspect-[3/4]" },
