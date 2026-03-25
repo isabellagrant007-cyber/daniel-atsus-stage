@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -21,28 +21,44 @@ import bts8 from "@/assets/bts-8.jpg";
 import bts9 from "@/assets/bts-9.jpg";
 import bts10 from "@/assets/bts-10.jpg";
 
+import fw1 from "@/assets/fashion-untamed-1.jpg";
+import fw2 from "@/assets/fashion-untamed-2.jpg";
+import fw3 from "@/assets/fashion-untamed-3.jpg";
+import fa1 from "@/assets/fashion-afw-1.jpg";
+import fa2 from "@/assets/fashion-afw-2.jpg";
+import fa3 from "@/assets/fashion-afw-3.jpg";
+import fa4 from "@/assets/fashion-afw-4.jpg";
+
+type Category = "cinematic" | "bts" | "fashion";
+
 type GalleryImage = {
   src: string;
   alt: string;
-  category: "cinematic" | "bts";
+  category: Category;
   span?: string;
   aspect?: string;
 };
 
 const allImages: GalleryImage[] = [
-  // Cinematic / Editorial
   { src: img6, alt: "Cinematic still", category: "cinematic", span: "col-span-2", aspect: "aspect-[21/9]" },
+  { src: fa1, alt: "AFWK 2023 — Denim couture", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts6, alt: "Close-up portrait – Paradise", category: "cinematic", aspect: "aspect-[4/3]" },
-  { src: img1, alt: "Portrait at Beach Bar", category: "cinematic", aspect: "aspect-[3/4]" },
+  { src: fw1, alt: "Untamed Empire — Editorial", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts1, alt: "Silhouette on fishing boat", category: "bts", aspect: "aspect-[4/3]" },
+  { src: fa2, alt: "AFWK 2023 — White ensemble", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts9, alt: "Monitor playback – Paradise", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
-  { src: img4, alt: "Outdoor portrait", category: "cinematic", aspect: "aspect-[3/4]" },
+  { src: img1, alt: "Portrait at Beach Bar", category: "cinematic", aspect: "aspect-[3/4]" },
+  { src: fa3, alt: "AFWK 2023 — Avant-garde sheer", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts5, alt: "With clapperboard on set", category: "bts", aspect: "aspect-[4/3]" },
+  { src: fw2, alt: "Untamed Empire — Full look", category: "fashion", aspect: "aspect-[3/4]" },
+  { src: img4, alt: "Outdoor portrait", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts8, alt: "In the makeup trailer", category: "bts", aspect: "aspect-[4/3]" },
-  { src: img7, alt: "Nature portrait", category: "cinematic", aspect: "aspect-[3/4]" },
+  { src: fa4, alt: "AFWK 2023 — Navy brocade", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts4, alt: "On the water", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
-  { src: img3, alt: "Bar scene", category: "cinematic", aspect: "aspect-[3/4]" },
+  { src: fw3, alt: "Untamed Empire — Behind the scenes", category: "fashion", span: "col-span-2", aspect: "aspect-[16/9]" },
+  { src: img7, alt: "Nature portrait", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts10, alt: "Between takes", category: "bts", aspect: "aspect-[4/3]" },
+  { src: img3, alt: "Bar scene", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts2, alt: "Cast group photo", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: img5, alt: "Rustic setting", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts3, alt: "Night shoot crew", category: "bts", aspect: "aspect-[4/3]" },
@@ -53,6 +69,7 @@ const allImages: GalleryImage[] = [
 const categories = [
   { key: "all", label: "All" },
   { key: "cinematic", label: "Cinematic" },
+  { key: "fashion", label: "Fashion" },
   { key: "bts", label: "Behind the Scenes" },
 ] as const;
 
@@ -76,21 +93,28 @@ const GallerySection = () => {
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
 
-  const navigateLightbox = (dir: number) => {
+  const navigateLightbox = useCallback((dir: number) => {
     if (lightboxIndex === null) return;
     const next = (lightboxIndex + dir + filtered.length) % filtered.length;
     setLightboxIndex(next);
-  };
+  }, [lightboxIndex, filtered.length]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") navigateLightbox(-1);
+      if (e.key === "ArrowRight") navigateLightbox(1);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightboxIndex, navigateLightbox]);
 
   return (
     <>
       <section id="gallery" ref={sectionRef} className="py-32 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <motion.div
-            style={{ y: headerY, opacity: headerOpacity }}
-            className="text-center mb-12"
-          >
+          <motion.div style={{ y: headerY, opacity: headerOpacity }} className="text-center mb-12">
             <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans mb-4">Visual</p>
             <h2 className="font-serif text-4xl md:text-6xl font-light">Gallery</h2>
           </motion.div>
@@ -118,7 +142,7 @@ const GallerySection = () => {
             ))}
           </motion.div>
 
-          {/* Masonry grid */}
+          {/* Grid */}
           <motion.div layout className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
             <AnimatePresence mode="popLayout">
               {filtered.map((img, i) => (
@@ -142,14 +166,14 @@ const GallerySection = () => {
                     loading="lazy"
                     className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1.2s] ease-out"
                   />
-                  {/* Hover overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-out">
-                    <p className="text-xs tracking-[0.15em] uppercase font-sans text-foreground/80">
-                      {img.alt}
-                    </p>
+                    <p className="text-xs tracking-[0.15em] uppercase font-sans text-foreground/80">{img.alt}</p>
                     {img.category === "bts" && (
                       <p className="text-[10px] tracking-[0.2em] uppercase text-gold mt-1">Paradise — BTS</p>
+                    )}
+                    {img.category === "fashion" && (
+                      <p className="text-[10px] tracking-[0.2em] uppercase text-gold mt-1">Fashion</p>
                     )}
                   </div>
                 </motion.div>
@@ -170,29 +194,16 @@ const GallerySection = () => {
             className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-md"
             onClick={closeLightbox}
           >
-            {/* Close */}
-            <button
-              onClick={closeLightbox}
-              className="absolute top-6 right-6 z-50 text-foreground/60 hover:text-foreground transition-colors"
-            >
+            <button onClick={closeLightbox} className="absolute top-6 right-6 z-50 text-foreground/60 hover:text-foreground transition-colors">
               <X className="w-6 h-6" />
             </button>
-
-            {/* Nav */}
-            <button
-              onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }}
-              className="absolute left-4 md:left-8 z-50 p-2 text-foreground/40 hover:text-foreground transition-colors"
-            >
+            <button onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }} className="absolute left-4 md:left-8 z-50 p-2 text-foreground/40 hover:text-foreground transition-colors">
               <ChevronLeft className="w-8 h-8" />
             </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }}
-              className="absolute right-4 md:right-8 z-50 p-2 text-foreground/40 hover:text-foreground transition-colors"
-            >
+            <button onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }} className="absolute right-4 md:right-8 z-50 p-2 text-foreground/40 hover:text-foreground transition-colors">
               <ChevronRight className="w-8 h-8" />
             </button>
 
-            {/* Image */}
             <AnimatePresence mode="wait">
               <motion.img
                 key={filtered[lightboxIndex].src}
@@ -207,19 +218,9 @@ const GallerySection = () => {
               />
             </AnimatePresence>
 
-            {/* Caption */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="absolute bottom-8 text-center"
-            >
-              <p className="text-xs tracking-[0.2em] uppercase font-sans text-foreground/50">
-                {filtered[lightboxIndex].alt}
-              </p>
-              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 mt-1">
-                {lightboxIndex + 1} / {filtered.length}
-              </p>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="absolute bottom-8 text-center">
+              <p className="text-xs tracking-[0.2em] uppercase font-sans text-foreground/50">{filtered[lightboxIndex].alt}</p>
+              <p className="text-[10px] tracking-[0.3em] uppercase text-foreground/30 mt-1">{lightboxIndex + 1} / {filtered.length}</p>
             </motion.div>
           </motion.div>
         )}
