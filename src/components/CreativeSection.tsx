@@ -84,30 +84,22 @@ const CreativeSection = () => {
                 i === 0 || i === 3 ? "md:row-span-2" : ""
               }`}
             >
-              <div className={`relative overflow-hidden ${
+              <div className={`relative overflow-hidden bg-card/30 border border-gold/10 ${
                 i === 0 || i === 3 ? "aspect-[3/4]" : "aspect-[4/3]"
-              }`}>
-                <img
-                  src={work.image}
-                  alt={work.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                {/* Info on hover */}
-                <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
-                  <p className="text-gold text-[9px] md:text-[10px] tracking-[0.3em] uppercase font-sans mb-2">
-                    {work.type}
-                  </p>
-                  <h3 className="font-serif text-lg md:text-xl italic font-light">
-                    {work.title}
-                  </h3>
-                  <p className="text-muted-foreground text-[10px] tracking-[0.2em] uppercase font-sans mt-2">
-                    {work.year}
-                  </p>
-                </div>
+              } flex flex-col items-center justify-center`}>
+                {/* Coming Soon Placeholder */}
+                <p className="text-gold/40 text-[10px] md:text-xs tracking-[0.4em] uppercase font-sans mb-3">
+                  Coming Soon
+                </p>
+                <h3 className="font-serif text-lg md:text-xl italic font-light text-foreground/60">
+                  {work.title}
+                </h3>
+                <p className="text-gold/30 text-[9px] md:text-[10px] tracking-[0.3em] uppercase font-sans mt-2">
+                  {work.type}
+                </p>
+                <p className="text-muted-foreground/40 text-[10px] tracking-[0.2em] uppercase font-sans mt-1">
+                  {work.year}
+                </p>
               </div>
             </motion.div>
           ))}
