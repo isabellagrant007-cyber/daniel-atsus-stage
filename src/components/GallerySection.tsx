@@ -30,7 +30,7 @@ import fa1 from "@/assets/fashion-afw-1.jpg";
 import fa2 from "@/assets/fashion-afw-2.jpg";
 import fa3 from "@/assets/fashion-afw-3.jpg";
 import fa4 from "@/assets/fashion-afw-4.jpg";
-import fa5 from "@/assets/fashion-afw-5.jpg";
+
 import p1 from "@/assets/personal-1.jpg";
 import p2 from "@/assets/personal-2.jpg";
 import p3 from "@/assets/personal-3.jpg";
