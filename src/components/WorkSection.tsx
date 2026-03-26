@@ -68,7 +68,7 @@ const fashionSections = [
       { src: fashionAfw2, alt: "AFWK 2023 — All-white structured ensemble" },
       { src: fashionAfw3, alt: "AFWK 2023 — Sheer avant-garde" },
       { src: fashionAfw4, alt: "AFWK 2023 — Navy brocade set" },
-      { src: fashionAfw5, alt: "AFWK 2023 — Sheer neon runway" },
+      
     ],
   },
   {
