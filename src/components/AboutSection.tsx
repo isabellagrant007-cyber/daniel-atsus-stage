@@ -45,7 +45,7 @@ const AboutSection = () => {
 
           <div className="space-y-4 md:space-y-5 text-muted-foreground text-xs md:text-sm leading-[1.8] font-sans font-light">
             <p>
-              Daniel Atsu Hukporti-Adjorble is an emerging screen talent whose work spans film and music visuals.
+              Daniel Atsu Hukporti-Adjorble is a screen talent whose work spans film and music visuals.
             </p>
             <p>
               With a strong on-screen presence and a natural ability to embody character, he continues to position himself at the intersection of cinema and culture.
