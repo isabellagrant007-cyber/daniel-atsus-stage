@@ -195,7 +195,7 @@ const WorkSection = () => {
                 onMouseLeave={() => setHoveredFilm(null)}
               >
                 {/* Cinematic media container — taller ratio on mobile */}
-                <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-background rounded-sm mb-4 md:mb-8">
+                <div ref={(el) => { containerRefs.current[i] = el; }} className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-background rounded-sm mb-4 md:mb-8" onClick={() => { if (playingTrailer === i) showControlsBriefly(); }}>
                   {/* Poster image */}
                   <motion.img
                     src={film.image}
