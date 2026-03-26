@@ -53,7 +53,7 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 1.1 }}
           className="text-muted-foreground text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase mb-8 md:mb-10 font-sans font-light"
         >
-          Actor &nbsp;·&nbsp; Creative &nbsp;·&nbsp; Performer
+          Actor &nbsp;·&nbsp; Artist &nbsp;·&nbsp; Creative
         </motion.p>
 
       </div>

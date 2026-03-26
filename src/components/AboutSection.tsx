@@ -54,10 +54,10 @@ const AboutSection = () => {
               His performance in <span className="text-foreground italic">Paradise</span> (2026) marks a significant step in his career, premiering at the Berlin International Film Festival.
             </p>
             <p>
-              Beyond film, Daniel has appeared in music videos, bringing a distinctive visual energy that connects storytelling with sound.
+              Beyond film, Daniel has appeared in music videos and works as a graphic designer and visual artist, bringing a distinctive creative energy across mediums.
             </p>
             <p>
-              As his body of work grows, he remains focused on building a global presence through intentional, compelling performances.
+              As his body of work grows, he remains focused on building a global presence through intentional, compelling work.
             </p>
           </div>
         </motion.div>
