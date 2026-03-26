@@ -7,12 +7,11 @@ import fashionUntamed1 from "@/assets/fashion-untamed-1.jpg";
 import fashionUntamed2 from "@/assets/fashion-untamed-2.jpg";
 import fashionUntamed3 from "@/assets/fashion-untamed-3.jpg";
 import fashionUntamed4 from "@/assets/fashion-untamed-4.jpg";
-import fashionUntamed5 from "@/assets/fashion-untamed-5.jpg";
 import fashionAfw1 from "@/assets/fashion-afw-1.jpg";
 import fashionAfw2 from "@/assets/fashion-afw-2.jpg";
 import fashionAfw3 from "@/assets/fashion-afw-3.jpg";
 import fashionAfw4 from "@/assets/fashion-afw-4.jpg";
-import fashionAfw5 from "@/assets/fashion-afw-5.jpg";
+
 import personal1 from "@/assets/personal-1.jpg";
 import personal2 from "@/assets/personal-2.jpg";
 import personal3 from "@/assets/personal-3.jpg";
@@ -69,7 +68,7 @@ const fashionSections = [
       { src: fashionAfw2, alt: "AFWK 2023 — All-white structured ensemble" },
       { src: fashionAfw3, alt: "AFWK 2023 — Sheer avant-garde" },
       { src: fashionAfw4, alt: "AFWK 2023 — Navy brocade set" },
-      { src: fashionAfw5, alt: "AFWK 2023 — Sheer neon runway" },
+      
     ],
   },
   {
@@ -80,8 +79,7 @@ const fashionSections = [
       { src: fashionUntamed1, alt: "Untamed Empire — Editorial 1" },
       { src: fashionUntamed2, alt: "Untamed Empire — Editorial 2" },
       { src: fashionUntamed3, alt: "Untamed Empire — BTS" },
-      { src: fashionUntamed4, alt: "Untamed Empire — Soft focus portrait" },
-      { src: fashionUntamed5, alt: "Untamed Empire — Twilight editorial" },
+      { src: fashionUntamed4, alt: "Untamed Empire — Twilight editorial" },
     ],
   },
 ];

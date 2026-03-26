@@ -27,13 +27,6 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-end pb-16 md:pb-24 px-4 md:px-6 text-center">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: 48 }}
-          transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-          className="h-px bg-gold/50 mb-6 md:mb-8"
-        />
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -51,7 +44,7 @@ const HeroSection = () => {
         >
           Daniel Atsu
           <br />
-          <span className="italic font-light text-gold-gradient">Hukporti-Adjorble</span>
+          <span className="italic font-light">Hukporti-Adjorble</span>
         </motion.h1>
 
         <motion.p
@@ -60,26 +53,9 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 1.1 }}
           className="text-muted-foreground text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase mb-8 md:mb-10 font-sans font-light"
         >
-          Actor &nbsp;·&nbsp; Creative &nbsp;·&nbsp; Performer
+          Actor &nbsp;·&nbsp; Artist &nbsp;·&nbsp; Creative
         </motion.p>
 
-        <motion.a
-          href="#work"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="group relative border border-gold/40 text-gold px-8 md:px-10 py-3 md:py-3.5 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase font-sans overflow-hidden transition-colors duration-700 hover:border-gold/70"
-        >
-          <span className="relative z-10">View Work</span>
-          <motion.div
-            className="absolute inset-0 bg-gold/10"
-            initial={{ x: "-100%" }}
-            whileHover={{ x: 0 }}
-            transition={{ duration: 0.5 }}
-          />
-        </motion.a>
       </div>
 
       {/* Scroll indicator */}
