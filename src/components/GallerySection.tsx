@@ -8,6 +8,7 @@ import img3 from "@/assets/daniel-gallery-2.jpg";
 import img4 from "@/assets/daniel-gallery-3.jpg";
 import img5 from "@/assets/daniel-gallery-4.jpg";
 import img6 from "@/assets/daniel-cinematic.jpg";
+import galleryStill1 from "@/assets/gallery-still-1.jpg";
 import img7 from "@/assets/daniel-about.jpg";
 
 import bts1 from "@/assets/bts-1.jpg";
