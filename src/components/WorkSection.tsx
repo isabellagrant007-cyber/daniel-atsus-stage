@@ -11,7 +11,7 @@ import fashionAfw1 from "@/assets/fashion-afw-1.jpg";
 import fashionAfw2 from "@/assets/fashion-afw-2.jpg";
 import fashionAfw3 from "@/assets/fashion-afw-3.jpg";
 import fashionAfw4 from "@/assets/fashion-afw-4.jpg";
-import fashionAfw5 from "@/assets/fashion-afw-5.jpg";
+
 import personal1 from "@/assets/personal-1.jpg";
 import personal2 from "@/assets/personal-2.jpg";
 import personal3 from "@/assets/personal-3.jpg";
