@@ -52,7 +52,7 @@ type GalleryImage = {
 };
 
 const allImages: GalleryImage[] = [
-  { src: img6, alt: "Cinematic still", category: "cinematic", span: "col-span-2", aspect: "aspect-[21/9]" },
+  { src: galleryStill1, alt: "Cinematic still", category: "cinematic", span: "col-span-2", aspect: "aspect-[21/9]" },
   { src: fa1, alt: "AFWK 2023 — Denim couture", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts6, alt: "Close-up portrait – Paradise", category: "cinematic", aspect: "aspect-[4/3]" },
   { src: fw1, alt: "Untamed Empire — Editorial", category: "fashion", aspect: "aspect-[3/4]" },
