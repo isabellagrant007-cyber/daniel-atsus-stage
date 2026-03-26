@@ -9,42 +9,36 @@ const categories = [
 
 const works = [
   {
-    image: artPiece1,
     title: "Fragments of Home",
     category: "art",
     type: "Mixed Media on Canvas",
     year: "2025",
   },
   {
-    image: designBrand,
     title: "Luxury Brand Identity",
     category: "design",
     type: "Brand System & Collateral",
     year: "2025",
   },
   {
-    image: creativeDir1,
     title: "Production Moodboard",
     category: "direction",
     type: "Creative Direction",
     year: "2024",
   },
   {
-    image: artPiece2,
     title: "Adorned",
     category: "art",
     type: "Digital Illustration",
     year: "2024",
   },
   {
-    image: designEditorial,
     title: "Editorial Spread",
     category: "design",
     type: "Publication Design",
     year: "2025",
   },
   {
-    image: creativeDir2,
     title: "Festival Campaign",
     category: "direction",
     type: "Art Direction & Poster",
