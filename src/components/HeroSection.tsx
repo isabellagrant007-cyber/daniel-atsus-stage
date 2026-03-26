@@ -56,23 +56,6 @@ const HeroSection = () => {
           Actor &nbsp;·&nbsp; Creative &nbsp;·&nbsp; Performer
         </motion.p>
 
-        <motion.a
-          href="#work"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.5 }}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className="group relative border border-gold/40 text-gold px-8 md:px-10 py-3 md:py-3.5 text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] uppercase font-sans overflow-hidden transition-colors duration-700 hover:border-gold/70"
-        >
-          <span className="relative z-10">View Work</span>
-          <motion.div
-            className="absolute inset-0 bg-gold/10"
-            initial={{ x: "-100%" }}
-            whileHover={{ x: 0 }}
-            transition={{ duration: 0.5 }}
-          />
-        </motion.a>
       </div>
 
       {/* Scroll indicator */}
