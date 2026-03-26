@@ -44,7 +44,7 @@ const HeroSection = () => {
         >
           Daniel Atsu
           <br />
-          <span className="italic font-light text-gold-gradient">Hukporti-Adjorble</span>
+          <span className="italic font-light">Hukporti-Adjorble</span>
         </motion.h1>
 
         <motion.p
