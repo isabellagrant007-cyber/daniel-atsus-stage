@@ -8,6 +8,7 @@ import img3 from "@/assets/daniel-gallery-2.jpg";
 import img4 from "@/assets/daniel-gallery-3.jpg";
 import img5 from "@/assets/daniel-gallery-4.jpg";
 import img6 from "@/assets/daniel-cinematic.jpg";
+import galleryStill1 from "@/assets/gallery-still-1.jpg";
 import img7 from "@/assets/daniel-about.jpg";
 
 import bts1 from "@/assets/bts-1.jpg";
@@ -51,7 +52,7 @@ type GalleryImage = {
 };
 
 const allImages: GalleryImage[] = [
-  { src: img6, alt: "Cinematic still", category: "cinematic", span: "col-span-2", aspect: "aspect-[21/9]" },
+  { src: galleryStill1, alt: "Cinematic still", category: "cinematic", span: "col-span-2", aspect: "aspect-[21/9]" },
   { src: fa1, alt: "AFWK 2023 — Denim couture", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts6, alt: "Close-up portrait – Paradise", category: "cinematic", aspect: "aspect-[4/3]" },
   { src: fw1, alt: "Untamed Empire — Editorial", category: "fashion", aspect: "aspect-[3/4]" },
