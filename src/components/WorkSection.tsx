@@ -286,16 +286,6 @@ const WorkSection = () => {
                     </div>
                   )}
 
-                  {/* "Watch Trailer" text — hidden on mobile */}
-                  {film.trailer && playingTrailer !== i && (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: hoveredFilm === i ? 1 : 0 }}
-                      className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] tracking-[0.4em] uppercase font-sans text-gold/60 z-10"
-                    >
-                      Watch Trailer
-                    </motion.p>
-                  )}
                 </div>
 
                 {/* Info row */}

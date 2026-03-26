@@ -88,17 +88,8 @@ const CreativeSection = () => {
                 i === 0 || i === 3 ? "aspect-[3/4]" : "aspect-[4/3]"
               } flex flex-col items-center justify-center`}>
                 {/* Coming Soon Placeholder */}
-                <p className="text-gold/40 text-[10px] md:text-xs tracking-[0.4em] uppercase font-sans mb-3">
+                <p className="text-gold/40 text-[10px] md:text-xs tracking-[0.4em] uppercase font-sans">
                   Coming Soon
-                </p>
-                <h3 className="font-serif text-lg md:text-xl italic font-light text-foreground/60">
-                  {work.title}
-                </h3>
-                <p className="text-gold/30 text-[9px] md:text-[10px] tracking-[0.3em] uppercase font-sans mt-2">
-                  {work.type}
-                </p>
-                <p className="text-muted-foreground/40 text-[10px] tracking-[0.2em] uppercase font-sans mt-1">
-                  {work.year}
                 </p>
               </div>
             </motion.div>
