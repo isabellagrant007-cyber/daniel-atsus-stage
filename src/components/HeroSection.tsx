@@ -27,13 +27,6 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-end pb-16 md:pb-24 px-4 md:px-6 text-center">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: 48 }}
-          transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-          className="h-px bg-gold/50 mb-6 md:mb-8"
-        />
-
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
