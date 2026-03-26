@@ -1,10 +1,4 @@
 import { motion } from "framer-motion";
-import artPiece1 from "@/assets/art-piece-1.jpg";
-import artPiece2 from "@/assets/art-piece-2.jpg";
-import designBrand from "@/assets/design-brand-1.jpg";
-import designEditorial from "@/assets/design-editorial-1.jpg";
-import creativeDir1 from "@/assets/creative-direction-1.jpg";
-import creativeDir2 from "@/assets/creative-direction-2.jpg";
 
 const categories = [
   { label: "All", value: "all" },
