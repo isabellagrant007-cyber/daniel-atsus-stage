@@ -98,7 +98,16 @@ const WorkSection = () => {
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
   const [playingTrailer, setPlayingTrailer] = useState<number | null>(null);
   const [muted, setMuted] = useState(true);
+  const [controlsVisible, setControlsVisible] = useState(true);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const showControlsBriefly = useCallback(() => {
+    setControlsVisible(true);
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = setTimeout(() => setControlsVisible(false), 2500);
+  }, []);
 
   const toggleTrailer = (idx: number) => {
     const video = videoRefs.current[idx];
@@ -106,12 +115,38 @@ const WorkSection = () => {
     if (playingTrailer === idx) {
       video.pause();
       setPlayingTrailer(null);
+      setControlsVisible(true);
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
     } else {
       videoRefs.current.forEach((v, i) => { if (v && i !== idx) v.pause(); });
       video.play();
       setPlayingTrailer(idx);
+      showControlsBriefly();
     }
   };
+
+  // Auto-pause videos when scrolled out of view
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    containerRefs.current.forEach((container, idx) => {
+      if (!container) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) {
+            const video = videoRefs.current[idx];
+            if (video && !video.paused) {
+              video.pause();
+              setPlayingTrailer((prev) => (prev === idx ? null : prev));
+            }
+          }
+        },
+        { threshold: 0.15 }
+      );
+      observer.observe(container);
+      observers.push(observer);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
