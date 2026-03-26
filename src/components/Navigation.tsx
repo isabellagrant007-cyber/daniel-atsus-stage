@@ -29,7 +29,7 @@ const Navigation = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between px-5 md:px-8 py-4 md:py-5">
-          <a href="#" className="font-serif text-lg md:text-xl tracking-wider text-gold-gradient">
+          <a href="#" className="font-serif text-lg md:text-xl tracking-wider text-foreground">
             ADJ
           </a>
 

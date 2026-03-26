@@ -36,7 +36,7 @@ const AboutSection = () => {
         >
           <p className="text-gold text-[10px] md:text-xs tracking-[0.4em] uppercase font-sans">About</p>
           <h2 className="font-serif text-3xl md:text-5xl font-light italic leading-tight">
-            An Emerging
+            A Distinct
             <br />
             <span className="text-gold-gradient">Presence</span>
           </h2>
