@@ -26,7 +26,6 @@ import fw1 from "@/assets/fashion-untamed-1.jpg";
 import fw2 from "@/assets/fashion-untamed-2.jpg";
 import fw3 from "@/assets/fashion-untamed-3.jpg";
 import fw4 from "@/assets/fashion-untamed-4.jpg";
-import fw5 from "@/assets/fashion-untamed-5.jpg";
 import fa1 from "@/assets/fashion-afw-1.jpg";
 import fa2 from "@/assets/fashion-afw-2.jpg";
 import fa3 from "@/assets/fashion-afw-3.jpg";
