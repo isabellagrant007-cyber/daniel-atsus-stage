@@ -65,7 +65,7 @@ const allImages: GalleryImage[] = [
   { src: img4, alt: "Outdoor portrait", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts8, alt: "In the makeup trailer", category: "bts", aspect: "aspect-[4/3]" },
   { src: fa4, alt: "AFWK 2023 — Navy brocade", category: "fashion", aspect: "aspect-[3/4]" },
-  { src: fa5, alt: "AFWK 2023 — Sheer neon runway", category: "fashion", aspect: "aspect-[3/4]" },
+  
   { src: bts4, alt: "On the water", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: fw3, alt: "Untamed Empire — Behind the scenes", category: "fashion", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: fw4, alt: "Untamed Empire — Soft focus", category: "fashion", aspect: "aspect-square" },
