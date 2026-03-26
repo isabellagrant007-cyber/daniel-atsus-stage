@@ -238,7 +238,11 @@ const WorkSection = () => {
 
                   {/* Play/Pause button */}
                   {film.trailer && (
-                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                    <div
+                      className={`absolute inset-0 flex items-center justify-center z-10 transition-opacity duration-700 ${
+                        playingTrailer === i && !controlsVisible ? "opacity-0 pointer-events-none" : "opacity-100"
+                      }`}
+                    >
                       <motion.button
                         onClick={() => toggleTrailer(i)}
                         className="relative group/play"
