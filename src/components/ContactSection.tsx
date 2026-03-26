@@ -1,13 +1,12 @@
 import { motion } from "framer-motion";
-import { Instagram, Mail } from "lucide-react";
+import { Instagram, Mail, Phone } from "lucide-react";
 
 const ContactSection = () => {
   return (
     <section id="contact" className="py-20 md:py-40 px-4 md:px-6 relative">
-      {/* Subtle background accent */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/30 to-transparent pointer-events-none" />
 
-      <div className="max-w-2xl mx-auto text-center relative">
+      <div className="max-w-3xl mx-auto text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -21,13 +20,14 @@ const ContactSection = () => {
             <br />
             <span className="text-gold-gradient">Together</span>
           </h2>
-          <p className="text-muted-foreground text-xs md:text-sm font-sans font-light tracking-wide">
-            For bookings and professional inquiries
-          </p>
 
           <div className="w-12 h-px bg-gold/30 mx-auto" />
 
-          <div className="space-y-4 md:space-y-5 pt-2 md:pt-4">
+          {/* Personal */}
+          <div className="space-y-4 pt-2">
+            <p className="text-muted-foreground/60 text-[9px] md:text-[10px] tracking-[0.35em] uppercase font-sans">
+              Direct
+            </p>
             <motion.a
               href="mailto:danielhukportiadjorble@gmail.com"
               whileHover={{ scale: 1.02 }}
@@ -46,6 +46,32 @@ const ContactSection = () => {
             >
               <Instagram className="w-4 h-4 flex-shrink-0" />
               @adjdanniel
+            </motion.a>
+          </div>
+
+          <div className="w-8 h-px bg-border/20 mx-auto" />
+
+          {/* Management */}
+          <div className="space-y-4 pt-2">
+            <p className="text-muted-foreground/60 text-[9px] md:text-[10px] tracking-[0.35em] uppercase font-sans">
+              Management — Film Afrique
+            </p>
+            <motion.a
+              href="mailto:filmafrique@gmail.com"
+              whileHover={{ scale: 1.02 }}
+              className="flex items-center justify-center gap-3 text-foreground text-xs md:text-sm font-sans tracking-wider hover:text-gold transition-colors duration-500"
+            >
+              <Mail className="w-4 h-4 flex-shrink-0" />
+              filmafrique@gmail.com
+            </motion.a>
+
+            <motion.a
+              href="tel:+233244317773"
+              whileHover={{ scale: 1.02 }}
+              className="inline-flex items-center gap-3 text-muted-foreground text-xs tracking-[0.25em] font-sans hover:text-gold transition-colors duration-500"
+            >
+              <Phone className="w-4 h-4 flex-shrink-0" />
+              +233 244 317 773
             </motion.a>
           </div>
         </motion.div>
