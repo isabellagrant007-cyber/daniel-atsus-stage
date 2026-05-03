@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X } from "lucide-react";
 import { useMedia } from "@/hooks/useMedia";
 
 import img1 from "@/assets/daniel-hero.jpg";
@@ -77,17 +77,17 @@ const allImages: GalleryImage[] = [
   { src: img3, alt: "Bar scene", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts2, alt: "Cast group photo", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: img5, alt: "Rustic setting", category: "cinematic", aspect: "aspect-[3/4]" },
-  { src: p1, alt: "Personal — Street editorial", category: "personal", aspect: "aspect-[3/4]" },
+  { src: p1, alt: "Street editorial", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts3, alt: "Night shoot crew", category: "bts", aspect: "aspect-[4/3]" },
   { src: copa1, alt: "FL × COPA — Solo portrait", category: "fashion", aspect: "aspect-[3/4]" },
-  { src: p4, alt: "Personal — Garage editorial", category: "personal", aspect: "aspect-[3/4]" },
+  { src: p4, alt: "Garage editorial", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts7, alt: "Harbor filming", category: "bts", aspect: "aspect-[4/3]" },
-  { src: p2, alt: "Personal — Crosswalk front", category: "personal", aspect: "aspect-[3/4]" },
+  { src: p2, alt: "Crosswalk editorial front", category: "fashion", aspect: "aspect-[3/4]" },
   { src: copa2, alt: "FL × COPA — Duo campaign", category: "fashion", aspect: "aspect-[3/4]" },
   { src: p5, alt: "Personal — Interior portrait", category: "personal", aspect: "aspect-[3/4]" },
   { src: img2, alt: "Full body portrait", category: "cinematic", aspect: "aspect-[3/4]" },
-  { src: p3, alt: "Personal — Crosswalk back", category: "personal", aspect: "aspect-[3/4]" },
-  { src: p6, alt: "Personal — Studio triptych", category: "personal", span: "col-span-2", aspect: "aspect-[16/9]" },
+  { src: p3, alt: "Crosswalk editorial back", category: "fashion", aspect: "aspect-[3/4]" },
+  { src: p6, alt: "Studio triptych", category: "fashion", span: "col-span-2", aspect: "aspect-[16/9]" },
 ];
 
 const categories = [
@@ -102,6 +102,8 @@ const GallerySection = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const lightboxScrollRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -130,6 +132,14 @@ const GallerySection = () => {
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
+
+  useEffect(() => {
+    if (lightboxIndex === null || !lightboxScrollRef.current) return;
+    lightboxScrollRef.current.scrollTo({
+      left: lightboxScrollRef.current.clientWidth * lightboxIndex,
+      behavior: "instant",
+    });
+  }, [lightboxIndex]);
 
   const navigateLightbox = useCallback((dir: number) => {
     if (lightboxIndex === null) return;
@@ -235,34 +245,40 @@ const GallerySection = () => {
             <button onClick={closeLightbox} className="absolute top-4 right-4 md:top-6 md:right-6 z-50 text-foreground/60 hover:text-foreground transition-colors">
               <X className="w-5 h-5 md:w-6 md:h-6" />
             </button>
-            <button onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }} className="absolute left-2 md:left-8 z-50 p-1 md:p-2 text-foreground/40 hover:text-foreground transition-colors">
-              <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
-            </button>
-            <button onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }} className="absolute right-2 md:right-8 z-50 p-1 md:p-2 text-foreground/40 hover:text-foreground transition-colors">
-              <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
-            </button>
-
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={filtered[lightboxIndex].src}
-                src={filtered[lightboxIndex].src}
-                alt={filtered[lightboxIndex].alt}
-                initial={{ opacity: 0, scale: 0.92, x: 40 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.92, x: -40 }}
-                transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                className="max-h-[75vh] md:max-h-[85vh] max-w-[85vw] md:max-w-[90vw] object-contain cursor-grab active:cursor-grabbing touch-pan-y select-none"
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
-                onDragEnd={(_, info) => {
-                  if (info.offset.x < -80 || info.velocity.x < -500) navigateLightbox(1);
-                  else if (info.offset.x > 80 || info.velocity.x > 500) navigateLightbox(-1);
-                }}
-                onClick={(e) => e.stopPropagation()}
-                draggable={false}
-              />
-            </AnimatePresence>
+            <div
+              ref={lightboxScrollRef}
+              className="flex h-full w-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide cursor-grab active:cursor-grabbing"
+              onClick={(e) => e.stopPropagation()}
+              onMouseDown={(e) => {
+                const el = lightboxScrollRef.current;
+                if (!el) return;
+                dragState.current = { isDown: true, startX: e.pageX, scrollLeft: el.scrollLeft };
+              }}
+              onMouseMove={(e) => {
+                const el = lightboxScrollRef.current;
+                if (!el || !dragState.current.isDown) return;
+                e.preventDefault();
+                el.scrollLeft = dragState.current.scrollLeft - (e.pageX - dragState.current.startX);
+              }}
+              onMouseUp={() => { dragState.current.isDown = false; }}
+              onMouseLeave={() => { dragState.current.isDown = false; }}
+              onScroll={(e) => {
+                const el = e.currentTarget;
+                const nextIndex = Math.round(el.scrollLeft / el.clientWidth);
+                if (nextIndex !== lightboxIndex && filtered[nextIndex]) setLightboxIndex(nextIndex);
+              }}
+            >
+              {filtered.map((img) => (
+                <div key={img.src} className="flex h-full min-w-full snap-center items-center justify-center px-4">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="max-h-[75vh] md:max-h-[85vh] max-w-[85vw] md:max-w-[90vw] object-contain select-none"
+                    draggable={false}
+                  />
+                </div>
+              ))}
+            </div>
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="absolute bottom-6 md:bottom-8 text-center">
               <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase font-sans text-foreground/50">{filtered[lightboxIndex].alt}</p>
