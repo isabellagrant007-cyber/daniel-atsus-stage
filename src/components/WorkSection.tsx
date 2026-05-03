@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo, type MutableRefObject } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useSlotResolver } from "@/hooks/useMedia";
@@ -13,17 +13,13 @@ import fashionAfw2 from "@/assets/fashion-afw-2.jpg";
 import fashionAfw3 from "@/assets/fashion-afw-3.jpg";
 import fashionAfw4 from "@/assets/fashion-afw-4.jpg";
 
-import personal1 from "@/assets/personal-1.jpg";
-import personal2 from "@/assets/personal-2.jpg";
-import personal3 from "@/assets/personal-3.jpg";
-import personal4 from "@/assets/personal-4.jpg";
 import personal5 from "@/assets/personal-5.jpg";
-import personal6 from "@/assets/personal-6.jpg";
-import bts11 from "@/assets/bts-11.jpg";
 import copa1 from "@/assets/copa-1.jpg";
 import copa2 from "@/assets/copa-2.jpg";
 import copa3 from "@/assets/copa-3.jpg";
 import copa4 from "@/assets/copa-4.jpg";
+
+type WorkImage = { src: string; alt: string };
 
 const filmCredits = [
   {
@@ -86,13 +82,18 @@ const fashionSections = [
 ];
 
 const personalImages = [
-  { src: personal1, alt: "Personal shoot — Collar pop" },
-  { src: personal2, alt: "Personal shoot — Crosswalk front" },
-  { src: personal3, alt: "Personal shoot — Crosswalk back" },
-  { src: personal4, alt: "Personal shoot — Garage editorial" },
-  { src: personal5, alt: "Personal shoot — Interior portrait" },
-  { src: personal6, alt: "Personal shoot — Studio triptych" },
+  { src: personal5, alt: "Personal — Interior portrait", slot: "personal/5" },
 ];
+
+const beginDrag = (el: HTMLDivElement | null, pageX: number, state: MutableRefObject<{ isDown: boolean; startX: number; scrollLeft: number }>) => {
+  if (!el) return;
+  state.current = { isDown: true, startX: pageX, scrollLeft: el.scrollLeft };
+};
+
+const moveDrag = (el: HTMLDivElement | null, pageX: number, state: MutableRefObject<{ isDown: boolean; startX: number; scrollLeft: number }>) => {
+  if (!el || !state.current.isDown) return;
+  el.scrollLeft = state.current.scrollLeft - (pageX - state.current.startX);
+};
 
 const WorkSection = () => {
   const resolver = useSlotResolver();
@@ -124,22 +125,37 @@ const WorkSection = () => {
   }, [resolver]);
 
   const personalMerged = useMemo(() => {
-    const replaced = personalImages.map((img, i) => ({
-      ...img,
-      src: resolver.get(`personal/${i + 1}`, img.src),
+    const replaced = personalImages.map((img) => ({
+      src: resolver.get(img.slot, img.src),
+      alt: img.alt,
     }));
     const extras = resolver.extras("work-personal").map((m) => ({ src: m.url, alt: m.title ?? "Personal" }));
     return [...replaced, ...extras];
   }, [resolver]);
 
   const [hoveredFilm, setHoveredFilm] = useState<number | null>(null);
-  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [selectedImages, setSelectedImages] = useState<WorkImage[] | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [playingTrailer, setPlayingTrailer] = useState<number | null>(null);
   const [muted, setMuted] = useState(true);
   const [controlsVisible, setControlsVisible] = useState(true);
+  const personalScrollRef = useRef<HTMLDivElement>(null);
+  const workLightboxScrollRef = useRef<HTMLDivElement>(null);
+  const personalDragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
+  const lightboxDragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openImages = useCallback((images: WorkImage[], index: number) => {
+    setSelectedImages(images);
+    setSelectedIndex(index);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedImages || !workLightboxScrollRef.current) return;
+    workLightboxScrollRef.current.scrollTo({ left: workLightboxScrollRef.current.clientWidth * selectedIndex, behavior: "instant" });
+  }, [selectedImages, selectedIndex]);
 
   const showControlsBriefly = useCallback(() => {
     setControlsVisible(true);
@@ -401,7 +417,7 @@ const WorkSection = () => {
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.4 }}
                     className="group relative aspect-[3/4] overflow-hidden cursor-pointer"
-                    onClick={() => setSelectedImage(img)}
+                    onClick={() => openImages(section.images, imgIdx)}
                   >
                     <img
                       src={img.src}
@@ -430,21 +446,20 @@ const WorkSection = () => {
             <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans">Personal</p>
             <div className="flex-1 h-px bg-gold/20" />
           </div>
-          <p className="text-muted-foreground text-xs md:text-sm font-sans font-light mb-8 md:mb-14 max-w-lg">
-            Street-style and personal editorial shoots.
-          </p>
-
-          <div className="relative overflow-hidden">
-            <motion.div
-              className="flex gap-2 md:gap-3"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            >
-              {[...personalMerged, ...personalMerged].map((img, i) => (
+          <div
+            ref={personalScrollRef}
+            className="relative -mx-4 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0 scrollbar-hide cursor-grab active:cursor-grabbing"
+            onMouseDown={(e) => beginDrag(personalScrollRef.current, e.pageX, personalDragState)}
+            onMouseMove={(e) => { moveDrag(personalScrollRef.current, e.pageX, personalDragState); if (personalDragState.current.isDown) e.preventDefault(); }}
+            onMouseUp={() => { personalDragState.current.isDown = false; }}
+            onMouseLeave={() => { personalDragState.current.isDown = false; }}
+          >
+            <div className="flex w-max gap-2 md:gap-3">
+              {personalMerged.map((img, i) => (
                 <div
                   key={i}
                   className="group relative flex-shrink-0 w-[180px] md:w-[300px] aspect-[3/4] overflow-hidden cursor-pointer"
-                  onClick={() => setSelectedImage(img)}
+                  onClick={() => openImages(personalMerged, i)}
                 >
                   <img
                     src={img.src}
@@ -457,39 +472,56 @@ const WorkSection = () => {
                   <div className="absolute bottom-0 right-0 w-6 h-6 md:w-8 md:h-8 border-r border-b border-gold/0 group-hover:border-gold/50 transition-all duration-700" />
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
 
       {/* Lightbox */}
       <AnimatePresence>
-        {selectedImage && (
+        {selectedImages && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-md cursor-pointer p-4"
-            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md cursor-pointer p-4"
+            onClick={() => setSelectedImages(null)}
           >
-            <motion.img
-              key={selectedImage.src}
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
-              className="max-h-[80vh] md:max-h-[85vh] max-w-[92vw] md:max-w-[90vw] object-contain"
+            <div
+              ref={workLightboxScrollRef}
+              className="flex h-full w-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide cursor-grab active:cursor-grabbing"
               onClick={(e) => e.stopPropagation()}
-            />
+              onMouseDown={(e) => beginDrag(workLightboxScrollRef.current, e.pageX, lightboxDragState)}
+              onMouseMove={(e) => { moveDrag(workLightboxScrollRef.current, e.pageX, lightboxDragState); if (lightboxDragState.current.isDown) e.preventDefault(); }}
+              onMouseUp={() => { lightboxDragState.current.isDown = false; }}
+              onMouseLeave={() => { lightboxDragState.current.isDown = false; }}
+              onScroll={(e) => {
+                const nextIndex = Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth);
+                if (nextIndex !== selectedIndex && selectedImages[nextIndex]) setSelectedIndex(nextIndex);
+              }}
+            >
+              {selectedImages.map((img) => (
+                <div key={img.src} className="flex h-full min-w-full snap-center items-center justify-center px-4">
+                  <motion.img
+                    src={img.src}
+                    alt={img.alt}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.4 }}
+                    className="max-h-[80vh] md:max-h-[85vh] max-w-[92vw] md:max-w-[90vw] object-contain select-none"
+                    draggable={false}
+                  />
+                </div>
+              ))}
+            </div>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
               className="absolute bottom-6 md:bottom-8 text-[10px] md:text-xs tracking-[0.2em] uppercase font-sans text-foreground/40"
             >
-              {selectedImage.alt}
+              {selectedImages[selectedIndex]?.alt}
             </motion.p>
           </motion.div>
         )}
