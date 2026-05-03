@@ -425,46 +425,7 @@ const WorkSection = () => {
         </motion.div>
 
         {/* ─── PERSONAL ─── */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="flex items-center gap-4 md:gap-6 mb-4 md:mb-6">
-            <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans">Personal</p>
-            <div className="flex-1 h-px bg-gold/20" />
-          </div>
-          <p className="text-muted-foreground text-xs md:text-sm font-sans font-light mb-8 md:mb-14 max-w-lg">
-            Street-style and personal editorial shoots.
-          </p>
-
-          <div className="relative overflow-hidden">
-            <motion.div
-              className="flex gap-2 md:gap-3"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            >
-              {[...personalMerged, ...personalMerged].map((img, i) => (
-                <div
-                  key={i}
-                  className="group relative flex-shrink-0 w-[180px] md:w-[300px] aspect-[3/4] overflow-hidden cursor-pointer"
-                  onClick={() => setSelectedImage(img)}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    loading="lazy"
-                    className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1.5s] ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute top-0 left-0 w-6 h-6 md:w-8 md:h-8 border-l border-t border-gold/0 group-hover:border-gold/50 transition-all duration-700" />
-                  <div className="absolute bottom-0 right-0 w-6 h-6 md:w-8 md:h-8 border-r border-b border-gold/0 group-hover:border-gold/50 transition-all duration-700" />
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.div>
+        <PersonalMarquee images={personalMerged} onSelect={setSelectedImage} />
       </div>
 
       {/* Lightbox */}
