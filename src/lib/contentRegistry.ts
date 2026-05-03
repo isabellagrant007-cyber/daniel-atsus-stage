@@ -115,7 +115,7 @@ export const SECTIONS: SectionDef[] = [
       kind: "image" as const,
       default: "",
     })),
-    extras: null,
+    extras: { label: "Additional artwork", kind: "image" },
   },
   {
     key: "gallery",
