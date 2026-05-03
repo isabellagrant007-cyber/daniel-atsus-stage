@@ -20,6 +20,8 @@ import copa2 from "@/assets/copa-2.jpg";
 import copa3 from "@/assets/copa-3.jpg";
 import copa4 from "@/assets/copa-4.jpg";
 
+type WorkImage = { src: string; alt: string };
+
 const filmCredits = [
   {
     title: "Paradise",
@@ -83,6 +85,16 @@ const fashionSections = [
 const personalImages = [
   { src: personal5, alt: "Personal — Interior portrait", slot: "personal/5" },
 ];
+
+const beginDrag = (el: HTMLDivElement | null, pageX: number, state: React.MutableRefObject<{ isDown: boolean; startX: number; scrollLeft: number }>) => {
+  if (!el) return;
+  state.current = { isDown: true, startX: pageX, scrollLeft: el.scrollLeft };
+};
+
+const moveDrag = (el: HTMLDivElement | null, pageX: number, state: React.MutableRefObject<{ isDown: boolean; startX: number; scrollLeft: number }>) => {
+  if (!el || !state.current.isDown) return;
+  el.scrollLeft = state.current.scrollLeft - (pageX - state.current.startX);
+};
 
 const WorkSection = () => {
   const resolver = useSlotResolver();
