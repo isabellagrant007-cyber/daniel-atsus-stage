@@ -47,7 +47,7 @@ const SECTIONS: SectionDef[] = [
     type: "image",
     single: false,
   },
-] as const;
+];
 
 const Admin = () => {
   const navigate = useNavigate();
