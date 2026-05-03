@@ -1,0 +1,1 @@
+UPDATE public.press_features SET image_url='https://deadline.com/wp-content/uploads/2026/02/MixCollage-10-Feb-2026-01-36-PM-8623.jpg?w=1024' WHERE url='https://www.imdb.com/name/nm17728212/';
