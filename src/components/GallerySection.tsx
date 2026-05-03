@@ -251,8 +251,16 @@ const GallerySection = () => {
                 animate={{ opacity: 1, scale: 1, x: 0 }}
                 exit={{ opacity: 0, scale: 0.92, x: -40 }}
                 transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-                className="max-h-[75vh] md:max-h-[85vh] max-w-[85vw] md:max-w-[90vw] object-contain"
+                className="max-h-[75vh] md:max-h-[85vh] max-w-[85vw] md:max-w-[90vw] object-contain cursor-grab active:cursor-grabbing touch-pan-y select-none"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -80 || info.velocity.x < -500) navigateLightbox(1);
+                  else if (info.offset.x > 80 || info.velocity.x > 500) navigateLightbox(-1);
+                }}
                 onClick={(e) => e.stopPropagation()}
+                draggable={false}
               />
             </AnimatePresence>
 
