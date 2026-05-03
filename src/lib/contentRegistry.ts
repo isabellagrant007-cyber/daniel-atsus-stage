@@ -89,7 +89,7 @@ export const SECTIONS: SectionDef[] = [
       { key: "fashion/untamed/3", label: "Untamed Empire — 3", kind: "image", default: fashionUntamed3 },
       { key: "fashion/untamed/4", label: "Untamed Empire — 4", kind: "image", default: fashionUntamed4 },
     ],
-    extras: null,
+    extras: { label: "Additional fashion image", kind: "image" },
   },
   {
     key: "work-personal",
@@ -115,7 +115,7 @@ export const SECTIONS: SectionDef[] = [
       kind: "image" as const,
       default: "",
     })),
-    extras: null,
+    extras: { label: "Additional artwork", kind: "image" },
   },
   {
     key: "gallery",

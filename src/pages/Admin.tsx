@@ -329,6 +329,28 @@ const Admin = () => {
                     <option value="personal">Personal</option>
                     <option value="bts">BTS</option>
                   </select>
+                ) : activeSection === "work-fashion" ? (
+                  <select
+                    value={extraCategory}
+                    onChange={(e) => setExtraCategory(e.target.value)}
+                    className="h-10 px-3 bg-background border border-input rounded-md text-sm"
+                  >
+                    <option value="">Select campaign…</option>
+                    <option value="copa">FL × COPA</option>
+                    <option value="afw">Accra Fashion Week</option>
+                    <option value="untamed">Untamed Empire</option>
+                  </select>
+                ) : activeSection === "creative" ? (
+                  <select
+                    value={extraCategory}
+                    onChange={(e) => setExtraCategory(e.target.value)}
+                    className="h-10 px-3 bg-background border border-input rounded-md text-sm"
+                  >
+                    <option value="">Select category…</option>
+                    <option value="art">Art</option>
+                    <option value="design">Design</option>
+                    <option value="direction">Direction</option>
+                  </select>
                 ) : (
                   <div />
                 )}

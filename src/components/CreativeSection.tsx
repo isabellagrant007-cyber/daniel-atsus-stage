@@ -49,6 +49,17 @@ const works = [
 
 const CreativeSection = () => {
   const resolver = useSlotResolver();
+  const extraWorks = resolver.extras("creative").map((m) => ({
+    title: m.title ?? "Untitled",
+    category: (m.category as string) || "art",
+    type: (m.subtitle as string) || "Artwork",
+    year: "",
+    url: m.url,
+  }));
+  const allWorks = [
+    ...works.map((w, i) => ({ ...w, url: resolver.get(`creative/${i + 1}`, "") })),
+    ...extraWorks,
+  ];
   return (
     <section id="creative" className="py-20 md:py-40 px-4 md:px-6 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/20 to-transparent pointer-events-none" />
@@ -75,11 +86,11 @@ const CreativeSection = () => {
 
         {/* Portfolio Grid — Masonry-inspired */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-          {works.map((work, i) => {
-            const url = resolver.get(`creative/${i + 1}`, "");
+          {allWorks.map((work, i) => {
+            const url = work.url;
             return (
               <motion.div
-                key={work.title}
+                key={`${work.title}-${i}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

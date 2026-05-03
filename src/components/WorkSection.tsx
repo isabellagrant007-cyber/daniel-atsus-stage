@@ -109,7 +109,7 @@ const WorkSection = () => {
   }, [resolver]);
 
   const fashionMerged = useMemo(() => {
-    return fashionSections.map((s) => {
+    const base = fashionSections.map((s) => {
       const catKey = s.title.toLowerCase().includes("copa")
         ? "copa"
         : s.title.toLowerCase().includes("accra")
@@ -119,8 +119,13 @@ const WorkSection = () => {
         ...img,
         src: resolver.get(`fashion/${catKey}/${i + 1}`, img.src),
       }));
-      return { ...s, images };
+      const extraImgs = resolver
+        .extras("work-fashion")
+        .filter((m) => (m.category ?? "") === catKey)
+        .map((m) => ({ src: m.url, alt: m.title ?? s.title }));
+      return { ...s, catKey, images: [...images, ...extraImgs] };
     });
+    return base;
   }, [resolver]);
 
   const personalMerged = useMemo(() => {
