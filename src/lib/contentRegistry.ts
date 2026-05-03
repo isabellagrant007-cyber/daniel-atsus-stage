@@ -94,14 +94,9 @@ export const SECTIONS: SectionDef[] = [
   {
     key: "work-personal",
     label: "Work — Personal",
-    description: "Marquee of personal editorial shots. Add more or replace existing slots.",
+    description: "Personal portrait images. Add more or replace existing slots.",
     slots: [
-      { key: "personal/1", label: "Personal — 1", kind: "image", default: personal1 },
-      { key: "personal/2", label: "Personal — 2", kind: "image", default: personal2 },
-      { key: "personal/3", label: "Personal — 3", kind: "image", default: personal3 },
-      { key: "personal/4", label: "Personal — 4", kind: "image", default: personal4 },
-      { key: "personal/5", label: "Personal — 5", kind: "image", default: personal5 },
-      { key: "personal/6", label: "Personal — 6", kind: "image", default: personal6 },
+      { key: "personal/5", label: "Personal — Interior portrait", kind: "image", default: personal5 },
     ],
     extras: { label: "Additional personal image", kind: "image" },
   },

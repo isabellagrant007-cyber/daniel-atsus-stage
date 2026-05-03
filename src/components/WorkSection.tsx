@@ -86,12 +86,7 @@ const fashionSections = [
 ];
 
 const personalImages = [
-  { src: personal1, alt: "Personal shoot — Collar pop" },
-  { src: personal2, alt: "Personal shoot — Crosswalk front" },
-  { src: personal3, alt: "Personal shoot — Crosswalk back" },
-  { src: personal4, alt: "Personal shoot — Garage editorial" },
-  { src: personal5, alt: "Personal shoot — Interior portrait" },
-  { src: personal6, alt: "Personal shoot — Studio triptych" },
+  { src: personal5, alt: "Personal — Interior portrait", slot: "personal/5" },
 ];
 
 const WorkSection = () => {
@@ -124,9 +119,9 @@ const WorkSection = () => {
   }, [resolver]);
 
   const personalMerged = useMemo(() => {
-    const replaced = personalImages.map((img, i) => ({
-      ...img,
-      src: resolver.get(`personal/${i + 1}`, img.src),
+    const replaced = personalImages.map((img) => ({
+      src: resolver.get(img.slot, img.src),
+      alt: img.alt,
     }));
     const extras = resolver.extras("work-personal").map((m) => ({ src: m.url, alt: m.title ?? "Personal" }));
     return [...replaced, ...extras];
@@ -430,17 +425,9 @@ const WorkSection = () => {
             <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans">Personal</p>
             <div className="flex-1 h-px bg-gold/20" />
           </div>
-          <p className="text-muted-foreground text-xs md:text-sm font-sans font-light mb-8 md:mb-14 max-w-lg">
-            Street-style and personal editorial shoots.
-          </p>
-
-          <div className="relative overflow-hidden">
-            <motion.div
-              className="flex gap-2 md:gap-3"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            >
-              {[...personalMerged, ...personalMerged].map((img, i) => (
+          <div className="relative -mx-4 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0 scrollbar-hide cursor-grab active:cursor-grabbing">
+            <div className="flex w-max gap-2 md:gap-3">
+              {personalMerged.map((img, i) => (
                 <div
                   key={i}
                   className="group relative flex-shrink-0 w-[180px] md:w-[300px] aspect-[3/4] overflow-hidden cursor-pointer"
@@ -457,7 +444,7 @@ const WorkSection = () => {
                   <div className="absolute bottom-0 right-0 w-6 h-6 md:w-8 md:h-8 border-r border-b border-gold/0 group-hover:border-gold/50 transition-all duration-700" />
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
