@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X } from "lucide-react";
 import { useMedia } from "@/hooks/useMedia";
 
 import img1 from "@/assets/daniel-hero.jpg";
@@ -77,17 +77,17 @@ const allImages: GalleryImage[] = [
   { src: img3, alt: "Bar scene", category: "cinematic", aspect: "aspect-[3/4]" },
   { src: bts2, alt: "Cast group photo", category: "bts", span: "col-span-2", aspect: "aspect-[16/9]" },
   { src: img5, alt: "Rustic setting", category: "cinematic", aspect: "aspect-[3/4]" },
-  { src: p1, alt: "Personal — Street editorial", category: "personal", aspect: "aspect-[3/4]" },
+  { src: p1, alt: "Street editorial", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts3, alt: "Night shoot crew", category: "bts", aspect: "aspect-[4/3]" },
   { src: copa1, alt: "FL × COPA — Solo portrait", category: "fashion", aspect: "aspect-[3/4]" },
-  { src: p4, alt: "Personal — Garage editorial", category: "personal", aspect: "aspect-[3/4]" },
+  { src: p4, alt: "Garage editorial", category: "fashion", aspect: "aspect-[3/4]" },
   { src: bts7, alt: "Harbor filming", category: "bts", aspect: "aspect-[4/3]" },
-  { src: p2, alt: "Personal — Crosswalk front", category: "personal", aspect: "aspect-[3/4]" },
+  { src: p2, alt: "Crosswalk editorial front", category: "fashion", aspect: "aspect-[3/4]" },
   { src: copa2, alt: "FL × COPA — Duo campaign", category: "fashion", aspect: "aspect-[3/4]" },
   { src: p5, alt: "Personal — Interior portrait", category: "personal", aspect: "aspect-[3/4]" },
   { src: img2, alt: "Full body portrait", category: "cinematic", aspect: "aspect-[3/4]" },
-  { src: p3, alt: "Personal — Crosswalk back", category: "personal", aspect: "aspect-[3/4]" },
-  { src: p6, alt: "Personal — Studio triptych", category: "personal", span: "col-span-2", aspect: "aspect-[16/9]" },
+  { src: p3, alt: "Crosswalk editorial back", category: "fashion", aspect: "aspect-[3/4]" },
+  { src: p6, alt: "Studio triptych", category: "fashion", span: "col-span-2", aspect: "aspect-[16/9]" },
 ];
 
 const categories = [
