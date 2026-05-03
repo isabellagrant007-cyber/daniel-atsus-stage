@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
-import { useMedia } from "@/hooks/useMedia";
+import { useSlotResolver } from "@/hooks/useMedia";
 import cinematicImage from "@/assets/daniel-cinematic.jpg";
 import tantraPoster from "@/assets/tantra-poster.jpg";
 import fashionUntamed1 from "@/assets/fashion-untamed-1.jpg";
