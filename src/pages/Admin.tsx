@@ -4,9 +4,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import { Trash2, Upload, LogOut, RefreshCw, Plus } from "lucide-react";
+import { Trash2, Upload, LogOut, RefreshCw, Plus, ExternalLink, Newspaper } from "lucide-react";
 import { SECTIONS, type Slot } from "@/lib/contentRegistry";
 import type { MediaItem } from "@/hooks/useMedia";
+import PressManager from "@/components/admin/PressManager";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -207,15 +208,27 @@ const Admin = () => {
               {s.label}
             </button>
           ))}
+          <button
+            onClick={() => setActiveSection("__press__")}
+            className={`w-full text-left px-3 py-2 text-xs tracking-wider uppercase font-sans rounded-sm transition flex items-center gap-2 ${
+              activeSection === "__press__" ? "bg-gold/10 text-gold" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Newspaper className="w-3 h-3" /> Press / Featured In
+          </button>
         </aside>
 
         <main className="p-6 space-y-8">
-          <div>
-            <h2 className="font-serif text-2xl mb-1">{sectionDef.label}</h2>
-            {sectionDef.description && (
-              <p className="text-xs text-muted-foreground">{sectionDef.description}</p>
-            )}
-          </div>
+          {activeSection === "__press__" ? (
+            <PressManager />
+          ) : (
+            <>
+              <div>
+                <h2 className="font-serif text-2xl mb-1">{sectionDef.label}</h2>
+                {sectionDef.description && (
+                  <p className="text-xs text-muted-foreground">{sectionDef.description}</p>
+                )}
+              </div>
 
           {/* Slots — one card per editable piece of content */}
           {sectionDef.slots.length > 0 && (
