@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo, type MutableRefObject } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useSlotResolver } from "@/hooks/useMedia";
@@ -86,12 +86,12 @@ const personalImages = [
   { src: personal5, alt: "Personal — Interior portrait", slot: "personal/5" },
 ];
 
-const beginDrag = (el: HTMLDivElement | null, pageX: number, state: React.MutableRefObject<{ isDown: boolean; startX: number; scrollLeft: number }>) => {
+const beginDrag = (el: HTMLDivElement | null, pageX: number, state: MutableRefObject<{ isDown: boolean; startX: number; scrollLeft: number }>) => {
   if (!el) return;
   state.current = { isDown: true, startX: pageX, scrollLeft: el.scrollLeft };
 };
 
-const moveDrag = (el: HTMLDivElement | null, pageX: number, state: React.MutableRefObject<{ isDown: boolean; startX: number; scrollLeft: number }>) => {
+const moveDrag = (el: HTMLDivElement | null, pageX: number, state: MutableRefObject<{ isDown: boolean; startX: number; scrollLeft: number }>) => {
   if (!el || !state.current.isDown) return;
   el.scrollLeft = state.current.scrollLeft - (pageX - state.current.startX);
 };
