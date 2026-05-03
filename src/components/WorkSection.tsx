@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { useMedia } from "@/hooks/useMedia";
 import cinematicImage from "@/assets/daniel-cinematic.jpg";
 import tantraPoster from "@/assets/tantra-poster.jpg";
 import fashionUntamed1 from "@/assets/fashion-untamed-1.jpg";
@@ -94,6 +95,37 @@ const personalImages = [
 ];
 
 const WorkSection = () => {
+  const { items: workMedia } = useMedia("work");
+  const { items: fashionMedia } = useMedia("work-fashion");
+  const { items: personalMedia } = useMedia("work-personal");
+
+  const films = useMemo(() => {
+    return filmCredits.map((f) => {
+      const slug = f.title.toLowerCase();
+      const override = workMedia.find((m) => m.category === slug);
+      return override ? { ...f, trailer: override.url } : f;
+    });
+  }, [workMedia]);
+
+  const fashionMerged = useMemo(() => {
+    return fashionSections.map((s) => {
+      const catKey = s.title.toLowerCase().includes("copa")
+        ? "copa"
+        : s.title.toLowerCase().includes("accra")
+        ? "afw"
+        : "untamed";
+      const extras = fashionMedia
+        .filter((m) => m.category === catKey)
+        .map((m) => ({ src: m.url, alt: m.title ?? s.title }));
+      return { ...s, images: [...extras, ...s.images] };
+    });
+  }, [fashionMedia]);
+
+  const personalMerged = useMemo(() => {
+    const extras = personalMedia.map((m) => ({ src: m.url, alt: m.title ?? "Personal" }));
+    return [...extras, ...personalImages];
+  }, [personalMedia]);
+
   const [hoveredFilm, setHoveredFilm] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
   const [playingTrailer, setPlayingTrailer] = useState<number | null>(null);
@@ -183,7 +215,7 @@ const WorkSection = () => {
           </div>
 
           <div className="space-y-10 md:space-y-16">
-            {filmCredits.map((film, i) => (
+            {films.map((film, i) => (
               <motion.div
                 key={film.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -339,7 +371,7 @@ const WorkSection = () => {
             Runway, editorial, and campaign work spanning Accra Fashion Week, FL × COPA, and Untamed Empire Creative Community.
           </p>
 
-          {fashionSections.map((section, sIdx) => (
+          {fashionMerged.map((section, sIdx) => (
             <motion.div
               key={section.title}
               initial={{ opacity: 0, y: 30 }}
@@ -402,7 +434,7 @@ const WorkSection = () => {
               animate={{ x: ["0%", "-50%"] }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             >
-              {[...personalImages, ...personalImages].map((img, i) => (
+              {[...personalMerged, ...personalMerged].map((img, i) => (
                 <div
                   key={i}
                   className="group relative flex-shrink-0 w-[180px] md:w-[300px] aspect-[3/4] overflow-hidden cursor-pointer"

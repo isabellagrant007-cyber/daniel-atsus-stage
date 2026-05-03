@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import heroImage from "@/assets/daniel-hero.jpg";
+import { useMedia } from "@/hooks/useMedia";
 
 const HeroSection = () => {
+  const { items } = useMedia("hero");
+  const src = items[0]?.url || heroImage;
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Image with Ken Burns */}
@@ -12,7 +15,7 @@ const HeroSection = () => {
         transition={{ duration: 8, ease: "easeOut" }}
       >
         <img
-          src={heroImage}
+          src={src}
           alt="Daniel Atsu Hukporti-Adjorble"
           className="h-full w-full object-cover object-top"
         />

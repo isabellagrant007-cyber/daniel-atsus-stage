@@ -1,6 +1,7 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useMedia } from "@/hooks/useMedia";
 
 import img1 from "@/assets/daniel-hero.jpg";
 import img2 from "@/assets/daniel-gallery-1.jpg";
@@ -110,9 +111,20 @@ const GallerySection = () => {
   const headerY = useTransform(scrollYProgress, [0, 0.3], [60, 0]);
   const headerOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
+  const { items: dynamicItems } = useMedia("gallery");
+  const merged: GalleryImage[] = useMemo(() => {
+    const extras: GalleryImage[] = dynamicItems.map((it) => ({
+      src: it.url,
+      alt: it.title ?? "Uploaded image",
+      category: ((it.category as Category) ?? "cinematic"),
+      aspect: "aspect-[3/4]",
+    }));
+    return [...extras, ...allImages];
+  }, [dynamicItems]);
+
   const filtered = activeFilter === "all"
-    ? allImages
-    : allImages.filter((img) => img.category === activeFilter);
+    ? merged
+    : merged.filter((img) => img.category === activeFilter);
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);

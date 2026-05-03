@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 import aboutImage from "@/assets/daniel-about.jpg";
+import { useMedia } from "@/hooks/useMedia";
 
 const AboutSection = () => {
+  const { items } = useMedia("about");
+  const src = items[0]?.url || aboutImage;
   return (
     <section id="about" className="py-20 md:py-40 px-4 md:px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
@@ -15,7 +18,7 @@ const AboutSection = () => {
         >
           <div className="aspect-[3/4] overflow-hidden">
             <motion.img
-              src={aboutImage}
+              src={src}
               alt="Daniel portrait"
               className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-[2s]"
               whileHover={{ scale: 1.03 }}
