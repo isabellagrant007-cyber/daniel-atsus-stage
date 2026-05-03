@@ -1,6 +1,7 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useMedia } from "@/hooks/useMedia";
 
 import img1 from "@/assets/daniel-hero.jpg";
 import img2 from "@/assets/daniel-gallery-1.jpg";
