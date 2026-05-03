@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import aboutImage from "@/assets/daniel-about.jpg";
-import { useMedia } from "@/hooks/useMedia";
+import { useSlotResolver } from "@/hooks/useMedia";
 
 const AboutSection = () => {
-  const { items } = useMedia("about");
-  const src = items[0]?.url || aboutImage;
+  const resolver = useSlotResolver();
+  const src = resolver.get("about/main", aboutImage);
   return (
     <section id="about" className="py-20 md:py-40 px-4 md:px-6">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">

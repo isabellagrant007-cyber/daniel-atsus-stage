@@ -113,12 +113,14 @@ const GallerySection = () => {
 
   const { items: dynamicItems } = useMedia("gallery");
   const merged: GalleryImage[] = useMemo(() => {
-    const extras: GalleryImage[] = dynamicItems.map((it) => ({
-      src: it.url,
-      alt: it.title ?? "Uploaded image",
-      category: ((it.category as Category) ?? "cinematic"),
-      aspect: "aspect-[3/4]",
-    }));
+    const extras: GalleryImage[] = dynamicItems
+      .filter((it) => !it.slot)
+      .map((it) => ({
+        src: it.url,
+        alt: it.title ?? "Uploaded image",
+        category: ((it.category as Category) ?? "cinematic"),
+        aspect: "aspect-[3/4]",
+      }));
     return [...extras, ...allImages];
   }, [dynamicItems]);
 

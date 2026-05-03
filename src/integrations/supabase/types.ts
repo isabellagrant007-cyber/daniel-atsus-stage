@@ -22,6 +22,7 @@ export type Database = {
           metadata: Json
           poster_url: string | null
           section: string
+          slot: string | null
           sort_order: number
           storage_path: string | null
           subtitle: string | null
@@ -37,6 +38,7 @@ export type Database = {
           metadata?: Json
           poster_url?: string | null
           section: string
+          slot?: string | null
           sort_order?: number
           storage_path?: string | null
           subtitle?: string | null
@@ -52,6 +54,7 @@ export type Database = {
           metadata?: Json
           poster_url?: string | null
           section?: string
+          slot?: string | null
           sort_order?: number
           storage_path?: string | null
           subtitle?: string | null

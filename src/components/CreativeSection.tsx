@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useMedia } from "@/hooks/useMedia";
+import { useSlotResolver } from "@/hooks/useMedia";
 
 const categories = [
   { label: "All", value: "all" },
@@ -48,7 +48,7 @@ const works = [
 ];
 
 const CreativeSection = () => {
-  const { items } = useMedia("creative");
+  const resolver = useSlotResolver();
   return (
     <section id="creative" className="py-20 md:py-40 px-4 md:px-6 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/20 to-transparent pointer-events-none" />
@@ -75,30 +75,33 @@ const CreativeSection = () => {
 
         {/* Portfolio Grid — Masonry-inspired */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-          {works.map((work, i) => (
-            <motion.div
-              key={work.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.1 }}
-              className={`group relative overflow-hidden ${
-                i === 0 || i === 3 ? "md:row-span-2" : ""
-              }`}
-            >
-              <div className={`relative overflow-hidden bg-card/30 border border-gold/10 ${
-                i === 0 || i === 3 ? "aspect-[3/4]" : "aspect-[4/3]"
-              } flex flex-col items-center justify-center`}>
-                {items[i] ? (
-                  <img src={items[i].url} alt={items[i].title ?? work.title} className="absolute inset-0 w-full h-full object-cover" />
-                ) : (
-                  <p className="text-gold/40 text-[10px] md:text-xs tracking-[0.4em] uppercase font-sans">
-                    Coming Soon
-                  </p>
-                )}
-              </div>
-            </motion.div>
-          ))}
+          {works.map((work, i) => {
+            const url = resolver.get(`creative/${i + 1}`, "");
+            return (
+              <motion.div
+                key={work.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.1 }}
+                className={`group relative overflow-hidden ${
+                  i === 0 || i === 3 ? "md:row-span-2" : ""
+                }`}
+              >
+                <div className={`relative overflow-hidden bg-card/30 border border-gold/10 ${
+                  i === 0 || i === 3 ? "aspect-[3/4]" : "aspect-[4/3]"
+                } flex flex-col items-center justify-center`}>
+                  {url ? (
+                    <img src={url} alt={work.title} className="absolute inset-0 w-full h-full object-cover" />
+                  ) : (
+                    <p className="text-gold/40 text-[10px] md:text-xs tracking-[0.4em] uppercase font-sans">
+                      Coming Soon
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Artist Statement */}
