@@ -65,6 +65,48 @@ export type Database = {
         }
         Relationships: []
       }
+      press_features: {
+        Row: {
+          created_at: string
+          description: string | null
+          favicon_url: string | null
+          id: string
+          image_url: string | null
+          published: boolean
+          site_name: string | null
+          sort_order: number
+          title: string | null
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          favicon_url?: string | null
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          site_name?: string | null
+          sort_order?: number
+          title?: string | null
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          favicon_url?: string | null
+          id?: string
+          image_url?: string | null
+          published?: boolean
+          site_name?: string | null
+          sort_order?: number
+          title?: string | null
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
