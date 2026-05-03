@@ -20,12 +20,7 @@ import copa2 from "@/assets/copa-2.jpg";
 import copa3 from "@/assets/copa-3.jpg";
 import copa4 from "@/assets/copa-4.jpg";
 
-import personal1 from "@/assets/personal-1.jpg";
-import personal2 from "@/assets/personal-2.jpg";
-import personal3 from "@/assets/personal-3.jpg";
-import personal4 from "@/assets/personal-4.jpg";
 import personal5 from "@/assets/personal-5.jpg";
-import personal6 from "@/assets/personal-6.jpg";
 
 export type SlotKind = "image" | "video";
 export type Slot = {

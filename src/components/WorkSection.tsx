@@ -13,12 +13,7 @@ import fashionAfw2 from "@/assets/fashion-afw-2.jpg";
 import fashionAfw3 from "@/assets/fashion-afw-3.jpg";
 import fashionAfw4 from "@/assets/fashion-afw-4.jpg";
 
-import personal1 from "@/assets/personal-1.jpg";
-import personal2 from "@/assets/personal-2.jpg";
-import personal3 from "@/assets/personal-3.jpg";
-import personal4 from "@/assets/personal-4.jpg";
 import personal5 from "@/assets/personal-5.jpg";
-import personal6 from "@/assets/personal-6.jpg";
 import bts11 from "@/assets/bts-11.jpg";
 import copa1 from "@/assets/copa-1.jpg";
 import copa2 from "@/assets/copa-2.jpg";
