@@ -480,32 +480,49 @@ const WorkSection = () => {
 
       {/* Lightbox */}
       <AnimatePresence>
-        {selectedImage && (
+        {selectedImages && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-md cursor-pointer p-4"
-            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-md cursor-pointer p-4"
+            onClick={() => setSelectedImages(null)}
           >
-            <motion.img
-              key={selectedImage.src}
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
-              className="max-h-[80vh] md:max-h-[85vh] max-w-[92vw] md:max-w-[90vw] object-contain"
+            <div
+              ref={workLightboxScrollRef}
+              className="flex h-full w-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth scrollbar-hide cursor-grab active:cursor-grabbing"
               onClick={(e) => e.stopPropagation()}
-            />
+              onMouseDown={(e) => beginDrag(workLightboxScrollRef.current, e.pageX, lightboxDragState)}
+              onMouseMove={(e) => { moveDrag(workLightboxScrollRef.current, e.pageX, lightboxDragState); if (lightboxDragState.current.isDown) e.preventDefault(); }}
+              onMouseUp={() => { lightboxDragState.current.isDown = false; }}
+              onMouseLeave={() => { lightboxDragState.current.isDown = false; }}
+              onScroll={(e) => {
+                const nextIndex = Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth);
+                if (nextIndex !== selectedIndex && selectedImages[nextIndex]) setSelectedIndex(nextIndex);
+              }}
+            >
+              {selectedImages.map((img) => (
+                <div key={img.src} className="flex h-full min-w-full snap-center items-center justify-center px-4">
+                  <motion.img
+                    src={img.src}
+                    alt={img.alt}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.4 }}
+                    className="max-h-[80vh] md:max-h-[85vh] max-w-[92vw] md:max-w-[90vw] object-contain select-none"
+                    draggable={false}
+                  />
+                </div>
+              ))}
+            </div>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
               className="absolute bottom-6 md:bottom-8 text-[10px] md:text-xs tracking-[0.2em] uppercase font-sans text-foreground/40"
             >
-              {selectedImage.alt}
+              {selectedImages[selectedIndex]?.alt}
             </motion.p>
           </motion.div>
         )}
