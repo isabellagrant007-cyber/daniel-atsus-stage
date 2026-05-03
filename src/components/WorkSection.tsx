@@ -466,14 +466,49 @@ const WorkSection = () => {
 
 type PersonalImg = { src: string; alt: string };
 const PersonalMarquee = ({ images, onSelect }: { images: PersonalImg[]; onSelect: (img: PersonalImg) => void }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  // Glide right-to-left as user scrolls down (and reverses on scroll up)
-  const x = useTransform(scrollYProgress, [0, 1], ["10%", "-60%"]);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const pausedUntilRef = useRef<number>(0);
+  const downRef = useRef<{ x: number; left: number; moved: boolean } | null>(null);
+
+  // Auto-glide loop; user interaction pauses momentarily then resumes
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    let raf = 0;
+    const step = () => {
+      const now = performance.now();
+      if (now > pausedUntilRef.current && !downRef.current) {
+        const half = el.scrollWidth / 2;
+        if (half > 0) {
+          el.scrollLeft += 0.5;
+          if (el.scrollLeft >= half) el.scrollLeft -= half;
+        }
+      }
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [images.length]);
+
+  const pauseBriefly = () => { pausedUntilRef.current = performance.now() + 1500; };
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    downRef.current = { x: e.clientX, left: el.scrollLeft, moved: false };
+    (e.target as Element).setPointerCapture?.(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    const el = scrollerRef.current;
+    if (!el || !downRef.current) return;
+    const dx = e.clientX - downRef.current.x;
+    if (Math.abs(dx) > 4) downRef.current.moved = true;
+    el.scrollLeft = downRef.current.left - dx;
+  };
+  const onPointerUp = () => { downRef.current = null; pauseBriefly(); };
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
@@ -484,29 +519,42 @@ const PersonalMarquee = ({ images, onSelect }: { images: PersonalImg[]; onSelect
         <div className="flex-1 h-px bg-gold/20" />
       </div>
       <p className="text-muted-foreground text-xs md:text-sm font-sans font-light mb-8 md:mb-14 max-w-lg">
-        Street-style and personal editorial shoots.
+        Street-style and personal editorial shoots. Drag or swipe to glide.
       </p>
 
-      <div className="relative overflow-hidden">
-        <motion.div className="flex gap-2 md:gap-3 will-change-transform" style={{ x }}>
+      <div
+        ref={scrollerRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        onWheel={pauseBriefly}
+        className="relative overflow-x-auto overflow-y-hidden scrollbar-hide cursor-grab active:cursor-grabbing select-none"
+        style={{ scrollbarWidth: "none" }}
+      >
+        <div className="flex gap-2 md:gap-3 w-max">
           {[...images, ...images].map((img, i) => (
             <div
               key={i}
               className="group relative flex-shrink-0 w-[180px] md:w-[300px] aspect-[3/4] overflow-hidden cursor-pointer"
-              onClick={() => onSelect(img)}
+              onClick={(e) => {
+                if (downRef.current?.moved) { e.preventDefault(); return; }
+                onSelect(img);
+              }}
             >
               <img
                 src={img.src}
                 alt={img.alt}
                 loading="lazy"
-                className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1.5s] ease-out"
+                draggable={false}
+                className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1.5s] ease-out pointer-events-none"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute top-0 left-0 w-6 h-6 md:w-8 md:h-8 border-l border-t border-gold/0 group-hover:border-gold/50 transition-all duration-700" />
               <div className="absolute bottom-0 right-0 w-6 h-6 md:w-8 md:h-8 border-r border-b border-gold/0 group-hover:border-gold/50 transition-all duration-700" />
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );
