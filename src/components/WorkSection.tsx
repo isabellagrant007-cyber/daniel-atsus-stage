@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useSlotResolver } from "@/hooks/useMedia";
 import cinematicImage from "@/assets/daniel-cinematic.jpg";
