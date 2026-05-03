@@ -33,7 +33,7 @@ function useMediaQuery(filter: { section?: string }) {
     load();
 
     const channel = supabase
-      .channel(`media-${filter.section ?? "all"}`)
+      .channel(`media-${filter.section ?? "all"}-${Math.random().toString(36).slice(2)}`)
       .on(
         "postgres_changes",
         {
