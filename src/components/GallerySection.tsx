@@ -102,6 +102,8 @@ const GallerySection = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const lightboxScrollRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -130,6 +132,14 @@ const GallerySection = () => {
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
+
+  useEffect(() => {
+    if (lightboxIndex === null || !lightboxScrollRef.current) return;
+    lightboxScrollRef.current.scrollTo({
+      left: lightboxScrollRef.current.clientWidth * lightboxIndex,
+      behavior: "instant",
+    });
+  }, [lightboxIndex]);
 
   const navigateLightbox = useCallback((dir: number) => {
     if (lightboxIndex === null) return;
