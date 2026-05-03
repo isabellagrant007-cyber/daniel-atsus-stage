@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useMedia } from "@/hooks/useMedia";
+import { useSlotResolver } from "@/hooks/useMedia";
 
 const categories = [
   { label: "All", value: "all" },
