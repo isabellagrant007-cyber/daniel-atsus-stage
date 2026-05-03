@@ -70,12 +70,20 @@ const PressSection = () => {
               {/* Preview image */}
               <div className="relative aspect-[16/10] overflow-hidden bg-background">
                 {item.image_url ? (
-                  <img
-                    src={item.image_url}
-                    alt={item.title ?? item.site_name ?? "Press feature"}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
-                  />
+                  <picture>
+                    <source
+                      srcSet={item.image_url.replace(/\.(jpg|jpeg|png)$/i, ".webp")}
+                      type="image/webp"
+                    />
+                    <img
+                      src={item.image_url}
+                      alt={item.title ?? item.site_name ?? "Press feature"}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      fetchPriority={i === 0 ? "high" : "auto"}
+                      decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
+                    />
+                  </picture>
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-muted-foreground/40 text-xs tracking-[0.3em] uppercase">
                     {item.site_name}
