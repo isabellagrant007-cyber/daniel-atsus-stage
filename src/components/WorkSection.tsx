@@ -95,6 +95,37 @@ const personalImages = [
 ];
 
 const WorkSection = () => {
+  const { items: workMedia } = useMedia("work");
+  const { items: fashionMedia } = useMedia("work-fashion");
+  const { items: personalMedia } = useMedia("work-personal");
+
+  const films = useMemo(() => {
+    return filmCredits.map((f) => {
+      const slug = f.title.toLowerCase();
+      const override = workMedia.find((m) => m.category === slug);
+      return override ? { ...f, trailer: override.url } : f;
+    });
+  }, [workMedia]);
+
+  const fashionMerged = useMemo(() => {
+    return fashionSections.map((s) => {
+      const catKey = s.title.toLowerCase().includes("copa")
+        ? "copa"
+        : s.title.toLowerCase().includes("accra")
+        ? "afw"
+        : "untamed";
+      const extras = fashionMedia
+        .filter((m) => m.category === catKey)
+        .map((m) => ({ src: m.url, alt: m.title ?? s.title }));
+      return { ...s, images: [...extras, ...s.images] };
+    });
+  }, [fashionMedia]);
+
+  const personalMerged = useMemo(() => {
+    const extras = personalMedia.map((m) => ({ src: m.url, alt: m.title ?? "Personal" }));
+    return [...extras, ...personalImages];
+  }, [personalMedia]);
+
   const [hoveredFilm, setHoveredFilm] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
   const [playingTrailer, setPlayingTrailer] = useState<number | null>(null);
