@@ -374,6 +374,8 @@ const Admin = () => {
               )}
             </div>
           )}
+            </>
+          )}
         </main>
       </div>
     </div>
