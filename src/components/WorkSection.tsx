@@ -418,7 +418,7 @@ const WorkSection = () => {
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.4 }}
                     className="group relative aspect-[3/4] overflow-hidden cursor-pointer"
-                    onClick={() => setSelectedImage(img)}
+                    onClick={() => openImages(section.images, imgIdx)}
                   >
                     <img
                       src={img.src}
@@ -447,13 +447,20 @@ const WorkSection = () => {
             <p className="text-gold text-xs tracking-[0.35em] uppercase font-sans">Personal</p>
             <div className="flex-1 h-px bg-gold/20" />
           </div>
-          <div className="relative -mx-4 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0 scrollbar-hide cursor-grab active:cursor-grabbing">
+          <div
+            ref={personalScrollRef}
+            className="relative -mx-4 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0 scrollbar-hide cursor-grab active:cursor-grabbing"
+            onMouseDown={(e) => beginDrag(personalScrollRef.current, e.pageX, personalDragState)}
+            onMouseMove={(e) => { moveDrag(personalScrollRef.current, e.pageX, personalDragState); if (personalDragState.current.isDown) e.preventDefault(); }}
+            onMouseUp={() => { personalDragState.current.isDown = false; }}
+            onMouseLeave={() => { personalDragState.current.isDown = false; }}
+          >
             <div className="flex w-max gap-2 md:gap-3">
               {personalMerged.map((img, i) => (
                 <div
                   key={i}
                   className="group relative flex-shrink-0 w-[180px] md:w-[300px] aspect-[3/4] overflow-hidden cursor-pointer"
-                  onClick={() => setSelectedImage(img)}
+                  onClick={() => openImages(personalMerged, i)}
                 >
                   <img
                     src={img.src}
