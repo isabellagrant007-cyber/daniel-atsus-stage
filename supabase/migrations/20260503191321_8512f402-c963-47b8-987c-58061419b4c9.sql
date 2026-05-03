@@ -1,0 +1,1 @@
+UPDATE public.press_features SET image_url='/press/imdb-paradise.jpg' WHERE url='https://www.imdb.com/name/nm17728212/';
