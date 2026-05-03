@@ -215,7 +215,7 @@ const WorkSection = () => {
           </div>
 
           <div className="space-y-10 md:space-y-16">
-            {filmCredits.map((film, i) => (
+            {films.map((film, i) => (
               <motion.div
                 key={film.title}
                 initial={{ opacity: 0, y: 30 }}
@@ -371,7 +371,7 @@ const WorkSection = () => {
             Runway, editorial, and campaign work spanning Accra Fashion Week, FL × COPA, and Untamed Empire Creative Community.
           </p>
 
-          {fashionSections.map((section, sIdx) => (
+          {fashionMerged.map((section, sIdx) => (
             <motion.div
               key={section.title}
               initial={{ opacity: 0, y: 30 }}
@@ -434,7 +434,7 @@ const WorkSection = () => {
               animate={{ x: ["0%", "-50%"] }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             >
-              {[...personalImages, ...personalImages].map((img, i) => (
+              {[...personalMerged, ...personalMerged].map((img, i) => (
                 <div
                   key={i}
                   className="group relative flex-shrink-0 w-[180px] md:w-[300px] aspect-[3/4] overflow-hidden cursor-pointer"
