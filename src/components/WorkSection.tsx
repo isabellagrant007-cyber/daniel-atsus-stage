@@ -95,17 +95,18 @@ const personalImages = [
 ];
 
 const WorkSection = () => {
-  const { items: workMedia } = useMedia("work");
-  const { items: fashionMedia } = useMedia("work-fashion");
-  const { items: personalMedia } = useMedia("work-personal");
+  const resolver = useSlotResolver();
 
   const films = useMemo(() => {
     return filmCredits.map((f) => {
       const slug = f.title.toLowerCase();
-      const override = workMedia.find((m) => m.category === slug);
-      return override ? { ...f, trailer: override.url } : f;
+      return {
+        ...f,
+        image: resolver.get(`work/${slug}/poster`, f.image),
+        trailer: resolver.get(`work/${slug}/trailer`, f.trailer),
+      };
     });
-  }, [workMedia]);
+  }, [resolver]);
 
   const fashionMerged = useMemo(() => {
     return fashionSections.map((s) => {
@@ -114,17 +115,22 @@ const WorkSection = () => {
         : s.title.toLowerCase().includes("accra")
         ? "afw"
         : "untamed";
-      const extras = fashionMedia
-        .filter((m) => m.category === catKey)
-        .map((m) => ({ src: m.url, alt: m.title ?? s.title }));
-      return { ...s, images: [...extras, ...s.images] };
+      const images = s.images.map((img, i) => ({
+        ...img,
+        src: resolver.get(`fashion/${catKey}/${i + 1}`, img.src),
+      }));
+      return { ...s, images };
     });
-  }, [fashionMedia]);
+  }, [resolver]);
 
   const personalMerged = useMemo(() => {
-    const extras = personalMedia.map((m) => ({ src: m.url, alt: m.title ?? "Personal" }));
-    return [...extras, ...personalImages];
-  }, [personalMedia]);
+    const replaced = personalImages.map((img, i) => ({
+      ...img,
+      src: resolver.get(`personal/${i + 1}`, img.src),
+    }));
+    const extras = resolver.extras("work-personal").map((m) => ({ src: m.url, alt: m.title ?? "Personal" }));
+    return [...replaced, ...extras];
+  }, [resolver]);
 
   const [hoveredFilm, setHoveredFilm] = useState<number | null>(null);
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
