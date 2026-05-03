@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import heroImage from "@/assets/daniel-hero.jpg";
-import { useMedia } from "@/hooks/useMedia";
+import { useSlotResolver } from "@/hooks/useMedia";
 
 const HeroSection = () => {
-  const { items } = useMedia("hero");
-  const src = items[0]?.url || heroImage;
+  const resolver = useSlotResolver();
+  const src = resolver.get("hero/main", heroImage);
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Image with Ken Burns */}
