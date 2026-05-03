@@ -135,13 +135,28 @@ const WorkSection = () => {
   }, [resolver]);
 
   const [hoveredFilm, setHoveredFilm] = useState<number | null>(null);
-  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [selectedImages, setSelectedImages] = useState<WorkImage[] | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [playingTrailer, setPlayingTrailer] = useState<number | null>(null);
   const [muted, setMuted] = useState(true);
   const [controlsVisible, setControlsVisible] = useState(true);
+  const personalScrollRef = useRef<HTMLDivElement>(null);
+  const workLightboxScrollRef = useRef<HTMLDivElement>(null);
+  const personalDragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
+  const lightboxDragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const containerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const openImages = useCallback((images: WorkImage[], index: number) => {
+    setSelectedImages(images);
+    setSelectedIndex(index);
+  }, []);
+
+  useEffect(() => {
+    if (!selectedImages || !workLightboxScrollRef.current) return;
+    workLightboxScrollRef.current.scrollTo({ left: workLightboxScrollRef.current.clientWidth * selectedIndex, behavior: "instant" });
+  }, [selectedImages, selectedIndex]);
 
   const showControlsBriefly = useCallback(() => {
     setControlsVisible(true);
