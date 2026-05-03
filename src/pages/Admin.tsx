@@ -7,7 +7,8 @@ import { toast } from "@/hooks/use-toast";
 import { Trash2, Upload, LogOut } from "lucide-react";
 import type { MediaItem } from "@/hooks/useMedia";
 
-const SECTIONS = [
+type SectionDef = { key: string; label: string; categories: readonly string[]; type: "image" | "video"; single: boolean; note?: string };
+const SECTIONS: SectionDef[] = [
   { key: "hero", label: "Hero", categories: [""], type: "image", single: true },
   { key: "about", label: "About", categories: [""], type: "image", single: true },
   {
