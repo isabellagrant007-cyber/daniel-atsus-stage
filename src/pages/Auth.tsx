@@ -9,7 +9,7 @@ const Auth = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -31,6 +31,13 @@ const Auth = () => {
         if (error) throw error;
         toast({ title: "Account created", description: "You can now sign in." });
         setMode("signin");
+      } else if (mode === "forgot") {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) throw error;
+        toast({ title: "Check your email", description: "A password reset link has been sent." });
+        setMode("signin");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
@@ -48,18 +55,29 @@ const Auth = () => {
       <form onSubmit={submit} className="w-full max-w-sm space-y-6 border border-gold/20 p-8 rounded-sm">
         <div className="text-center">
           <p className="text-gold text-[10px] tracking-[0.4em] uppercase mb-3">Admin</p>
-          <h1 className="font-serif text-3xl font-light">{mode === "signin" ? "Sign In" : "Create Account"}</h1>
+          <h1 className="font-serif text-3xl font-light">
+            {mode === "signin" ? "Sign In" : mode === "signup" ? "Create Account" : "Reset Password"}
+          </h1>
         </div>
         <div className="space-y-3">
           <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+          {mode !== "forgot" && (
+            <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+          )}
         </div>
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? "..." : mode === "signin" ? "Sign In" : "Sign Up"}
+          {loading ? "..." : mode === "signin" ? "Sign In" : mode === "signup" ? "Sign Up" : "Send Reset Link"}
         </Button>
-        <button type="button" onClick={() => setMode(mode === "signin" ? "signup" : "signin")} className="w-full text-xs text-muted-foreground hover:text-gold transition">
-          {mode === "signin" ? "Need an account? Sign up" : "Have an account? Sign in"}
-        </button>
+        <div className="flex flex-col gap-2 text-center">
+          {mode === "signin" && (
+            <button type="button" onClick={() => setMode("forgot")} className="text-xs text-muted-foreground hover:text-gold transition">
+              Forgot password?
+            </button>
+          )}
+          <button type="button" onClick={() => setMode(mode === "signin" ? "signup" : "signin")} className="text-xs text-muted-foreground hover:text-gold transition">
+            {mode === "signin" ? "Need an account? Sign up" : mode === "signup" ? "Have an account? Sign in" : "Back to sign in"}
+          </button>
+        </div>
       </form>
     </div>
   );
